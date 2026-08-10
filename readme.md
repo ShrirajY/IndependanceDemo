@@ -1,7 +1,10 @@
-///////////////////////////
+# Project Readme
 
-monuments           person responsible              status
-red fort            Shriraj                         not done
+## Monuments
+
+| Monument | Person Responsible | Status |
+|----------|--------------------|--------|
+| Red Fort | Shriraj | Not done |
 
 
 
