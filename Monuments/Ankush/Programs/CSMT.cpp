@@ -1,0 +1,612 @@
+#include <GL/freeglut.h>
+#include "math.h"
+#include "../../../core/Timer.h"
+#include "../../../core/Ankush/Engine/Headers/Ng_shapes.h"
+
+
+#define PI 3.14159265359f
+
+//  =  / 100.0f;
+
+/* ========= PILLAR ============ */
+
+void drawPillar(float x, float y, float width, float height)
+{
+        
+    /* Main pillar */
+    glColor3f(0.45f, 0.28f, 0.16f);
+
+    drawRectangle(x          , y          , 
+                  x + width  , y          ,
+                  x + width  , y + height ,
+                  x          , y + height );
+
+    /* Highlight */
+    glColor3f(0.70f, 0.48f, 0.30f);
+
+    drawRectangle(x + width * 0.25f , y          , 
+                  x + width * 0.45f , y          ,
+                  x + width * 0.45f , y + height ,
+                  x + width * 0.25f , y + height );
+
+    /* Top */
+    glColor3f(0.30f, 0.18f, 0.12f);
+
+    drawRectangle(x - 0.01f         , y + height          ,
+                  x + width + 0.01f , y + height          ,
+                  x + width + 0.01f , y + height + 0.025f ,
+                  x - 0.01f         , y + height + 0.025f );
+     
+    
+}
+
+
+/* ================  SMALL WINDOW  =========== */
+
+void drawWindow(float cx, float bottom, float width, float height)
+{
+    /* Window */
+    glColor3f(0.78f, 0.72f, 0.55f);
+
+    drawArch(cx , bottom , width, height);
+
+    /* Outline */
+    glColor3f(0.15f, 0.12f, 0.10f);
+
+    glLineWidth(2.0f);
+
+    drawArchOutline(cx , bottom , width, height);
+
+    /* Vertical divider */
+    drawLine(cx , bottom,
+             cx , bottom + height * 0.65f );
+}
+
+
+/* ============== GOTHIC WINDOW =================== */
+
+void drawGothicWindow(float cx, float bottom, float width, float height)
+{
+   
+
+    glColor3f(1.20f, 1.10f, 1.68f);   // White color
+
+    drawArch(cx , bottom, width, height);
+
+    glColor3f(0.15f, 0.12f, 0.10f);
+
+    glLineWidth(2.0f);
+
+    drawArchOutline(cx , bottom , width, height);
+
+    /* Central vertical line */
+    drawLine(cx , bottom ,
+             cx , bottom + height * 0.75f );
+
+    /* Left diagonal */
+    drawLine(cx - width * 0.38f ,bottom + height * 0.55f , 
+             cx , bottom + height );
+
+    /* Right diagonal */
+    drawLine(cx , bottom + height , 
+             cx + width * 0.38f , bottom + height * 0.55f );
+}
+
+
+/* ================= CIRCULAR WINDOW =================== */
+
+void drawCircularWindow(float centerX, float centerY, float radius)
+{
+    /* Outer circle */
+    // glColor3f(0.82f, 0.76f, 0.58f);
+
+    drawCircle(centerX , centerY , radius);
+
+    /* Outline */
+    glColor3f(0.15f, 0.12f, 0.10f);
+
+    glLineWidth(2.0f);
+
+    drawCircleOutline(centerX , centerY , radius);
+
+    /* Vertical divider */
+    drawLine(centerX - radius ,  centerY ,
+             centerX + radius ,  centerY );
+
+    /* Horizontal divider */
+    drawLine(centerX , centerY - radius ,
+             centerX , centerY + radius );
+}
+
+
+/* ============  ROOF ============= */
+
+void drawRoof(float x1, float y1, float x2, float y2, float peakX, float peakY)
+{
+    glColor3f(0.40f, 0.23f, 0.15f);
+
+    drawTriangle(x1    ,    y1 , 
+                 x2    ,    y2 , 
+                 peakX , peakY );
+
+    glColor3f(0.12f, 0.10f, 0.08f);
+
+    glLineWidth(2.0f);
+
+    drawLine(x1   , y1    , 
+             peakX, peakY );
+
+    drawLine(peakX , peakY , 
+             x2    , y2    );
+}
+
+
+/* ===============  TOWER ROOF ==================== */
+
+void drawTowerRoof(float cx, float bottom, float width, float height)
+{
+    glColor3f(0.42f, 0.25f, 0.16f);
+
+    drawTriangle(cx - width / 2 , bottom          ,
+                 cx + width / 2 , bottom          ,
+                 cx             , bottom + height );
+
+    glColor3f(0.12f, 0.10f, 0.08f);
+
+    glLineWidth(2.0f);
+
+    drawLine(cx - width / 2 , bottom          ,
+             cx             , bottom + height );
+
+    drawLine(cx             , bottom + height ,
+             cx + width / 2 , bottom          );
+}
+
+
+/* ---------------------------------------------------------
+   CROSS
+   --------------------------------------------------------- */
+
+void drawCross(float cx, float cy, float size)
+{
+    glColor3f(0.12f, 0.10f, 0.08f);
+
+    glLineWidth(2.0f);
+
+    drawLine(cx, cy - size,
+             cx, cy + size);
+
+    drawLine(cx - size * 0.45f, cy + size * 0.35f,
+             cx + size * 0.45f, cy + size * 0.35f);
+}
+
+
+/* ================= SIDE TOWER ============= */
+
+void drawSideTower(float cx)
+{
+    /* Tower body */
+    glColor3f(0.47f, 0.29f, 0.18f);
+
+    drawRectangle(cx - 0.095f , -0.45f ,
+                  cx + 0.095f , -0.45f ,
+                  cx + 0.095f ,  0.25f ,
+                  cx - 0.095f ,  0.25f );
+
+    /* Tower roof */
+    drawTowerRoof(cx  , 0.25f , 0.18f, 0.28f);
+
+    /* Tower window */
+    drawGothicWindow(cx        , 0.02f ,  0.04f, 0.12f);
+    drawGothicWindow(cx - 0.07 , 0.02f ,  0.04f, 0.12f);
+    drawGothicWindow(cx + 0.07 , 0.02f ,  0.04f, 0.12f);
+
+    // Mid Tower Window
+    
+            drawArch(cx , -0.2f , 0.10f,  0.14f);
+    glColor3f(1.0f,1.0f,1.0f); 
+    drawGothicWindow(cx , -0.2f , 0.08f, 0.14f); 
+
+    drawArchOutline(cx , -0.2f , 0.10f, 0.14f);
+
+   
+    /* Lower window */
+
+            drawArch(cx , -0.45f , 0.12f,  0.18f);
+    glColor3f(1.0f,1.0f,1.0f); 
+    drawGothicWindow(cx , -0.45f , 0.10f, 0.16f); 
+
+    drawArchOutline(cx , -0.45f , 0.12f, 0.16f);
+
+   
+    //======================== Cross =========================
+
+    /* Horizontal decorative lines */
+    glColor3f(0.15f, 0.12f, 0.10f);
+
+    glLineWidth(2.0f);
+
+    drawLine(cx - 0.085f ,  0.18f , cx + 0.085f ,  0.18f );
+    drawLine(cx - 0.085f ,  0.15f , cx + 0.085f ,  0.15f );
+    drawLine(cx - 0.085f , -0.24f , cx + 0.085f , -0.24f );
+    drawLine(cx - 0.085f , -0.22f , cx + 0.085f , -0.22f );
+
+    /* Cross */
+    drawCross(cx, 0.55f, 0.035f);
+}
+
+
+/* =============== MAIN CENTER DOME =================== */
+
+void drawDome()
+{
+    float cx = 0.0f;
+    float baseY = 0.52f;
+    float radiusX = 0.15f;
+    float radiusY = 0.23f;
+
+    glColor3f(0.43f, 0.27f, 0.17f);
+
+    glBegin(GL_POLYGON);
+
+        for (float theta = PI; theta >= 0.0f; theta -= 0.02f)
+        {
+            float x = cx + radiusX * cosf(theta);
+            float y = baseY + radiusY * sinf(theta);
+
+            glVertex3f(x , y  ,0.0f);
+        }
+
+        glVertex3f(cx + radiusX , baseY , 0.0f);
+        glVertex3f(cx - radiusX , baseY , 0.0f);
+
+    glEnd();
+
+    /* Dome outline */
+    glColor3f(0.12f, 0.10f, 0.08f);
+
+    glLineWidth(2.0f);
+
+    glBegin(GL_LINE_STRIP);
+
+        for (float theta = PI; theta >= 0.0f; theta -= 0.02f)
+        {
+            float x = cx + radiusX * cosf(theta);
+            float y = baseY + radiusY * sinf(theta);
+
+            glVertex3f(x , y , 0.0f);
+        }
+
+    glEnd();
+
+    /* Dome vertical ribs */
+    for (int i = -3; i <= 3; i++)
+    {
+        float x = i * 0.045f;
+        drawLine(x         , baseY , x         , baseY + 0.1f );
+        drawLine(x + 0.02f , baseY , x - 0.02f , baseY        );
+    }
+
+    drawLine( 0.01f , 0.74 ,  0.1   , baseY  );
+    drawLine( 0.01f , 0.74 ,  0.11  , baseY  );
+    drawLine(-0.01f , 0.74 , -0.1   , baseY  );
+    drawLine(-0.01f , 0.74 , -0.11  , baseY  );
+
+
+
+    /* Small top structure */
+    glColor3f(0.75f, 0.60f, 0.40f);
+
+    drawTriangle(-0.025f , 0.74f, 
+                  0.025f , 0.74f, 
+                  0.0f , 0.85f );
+
+    drawRectangle(-0.018f, 0.74f,
+                   0.018f, 0.74f,
+                   0.018f, 0.79f,
+                  -0.018f, 0.79f);
+
+  
+}
+
+
+/* ===================== CENTER TOWER =============== */
+
+void drawCenterTower()
+{
+    /* Main central tower */
+    glColor3f(0.48f, 0.30f, 0.18f);
+
+    drawRectangle(-0.15f, -0.45f,
+                   0.15f, -0.45f,
+                   0.15f, 0.52f,
+                  -0.15f, 0.52f);
+
+    /* Dome */
+    drawDome();
+
+    
+//=======================================================================
+
+    for (int i = -3; i <= 3; i++)
+    {
+        float baseY = 0.0f;
+        float x = i * 0.045f;
+
+        drawLine(x + 0.01f , baseY + 0.05  ,
+                 x + 0.01f , baseY + 0.48f ); // vetical line        
+        for(int j = -3; j<= 3; j++)
+        {
+            float baseY = 0.0f;
+            float x = j * 0.045f;
+
+            drawLine(x + 0.05f , baseY + 0.48 , x - 0.05f , baseY + 0.48f );         // Top border
+            drawLine(x + 0.05f , baseY + 0.45f, x - 0.05f , baseY + 0.45f );  
+            drawLine(x + 0.05f , baseY + 0.45f, x - 0.05f , baseY + 0.15f ); 
+            drawLine(x + 0.05f , baseY + 0.1f , x - 0.05f , baseY + 0.1f  ); 
+            drawLine(x + 0.05f , baseY + 0.08f, x - 0.05f , baseY + 0.08f );
+        }
+    }
+    
+    //=================================================================
+
+    for (int i = -3; i <= 3; i++)
+    {
+        float baseY = 0.0f;
+        float x = i * 0.045f;
+
+        drawLine(x + 0.01f , baseY + 0.05 ,
+                 x + 0.01f , baseY + 0.22f); // vetical line        
+        for(int j = -3; j<= 3; j++)
+        {
+            float baseY = 0.0f;
+            float x = j * 0.045f;
+
+            drawLine(x + 0.05f , baseY + 0.24  ,  x - 0.05f , baseY + 0.24f );         // Top border
+            drawLine(x + 0.05f , baseY + 0.22f  , x - 0.05f , baseY + 0.22f );  
+        }
+    }
+        
+    drawTowerRoof(0.0f , 0.52f ,  0.3f , 0.09f );
+    drawTowerRoof(0.0f ,  0.1f , 0.33f , 0.16f );   // centeral Triangle
+
+    /* Main circular window */
+    
+    drawCircularWindow(0.0f , 0.16f , 0.055f);    
+    drawCircularWindow(0.0f , 0.16f , 0.045f);
+
+    /* Upper gothic window */
+    drawGothicWindow( 0.0f  ,  0.27f , 0.05f, 0.14f);
+    drawGothicWindow(-0.09f , 0.27f , 0.05f, 0.14f);
+    drawGothicWindow( 0.09f , 0.27f , 0.05f, 0.14f);
+
+    /* Lower three gothic windows */
+
+    drawGothicWindow(-0.095f , -0.05f, 0.075f, 0.14f);
+    drawGothicWindow( 0.0f   , -0.05f, 0.075f, 0.14f);
+    drawGothicWindow( 0.095f , -0.05f, 0.075f, 0.14f);
+
+    /* Central entrance */
+    // glColor3f(1.25f, 1.15f, 1.10f);
+
+            drawArch( 0.0f , -0.45f , 0.12f,  0.22f);    
+    glColor3f(0.0f, 0.0f, 0.0f);        
+    drawGothicWindow( 0.0f , -0.45f , 0.075f, 0.22f);
+
+            drawArch(-0.1f , -0.45f , 0.12f,  0.22f);
+    glColor3f(0.0f, 0.0f, 0.0f);        
+    drawGothicWindow( -0.1f , -0.45f , 0.075f, 0.22f);
+
+            drawArch( 0.1f , -0.45f , 0.12f,  0.22f);
+    glColor3f(0.0f, 0.0f, 0.0f);        
+    drawGothicWindow( 0.1f , -0.45f , 0.075f, 0.22f);
+
+    // glColor3f(1.12f, 1.10f, 1.08f);
+
+    drawArchOutline( 0.0f , -0.45f , 0.12f, 0.25f);
+    drawArchOutline(-0.1f , -0.45f , 0.12f, 0.25f);
+    drawArchOutline( 0.1f , -0.45f , 0.12f, 0.25f);
+
+    
+// =======================================================================================                    
+
+    /* Side pillars */
+    
+    drawTowerRoof(-0.17f  ,   0.5f ,  0.06f,  0.08f);    
+       drawPillar(-0.185f , -0.45f , 0.035f,  0.95f);
+
+    drawTowerRoof(0.17f ,   0.5f , 0.06f , 0.08f);
+       drawPillar(0.15f , -0.45f , 0.035f, 0.95f);
+
+
+    // main wall pillars 
+    drawTowerRoof(-0.43f ,  0.12f , 0.06f  ,  0.08f );    
+       drawPillar(-0.45f , -0.45f , 0.035f ,  0.55f );
+    drawTowerRoof(0.47f  ,  0.12f ,  0.06f ,  0.08f );
+       drawPillar(0.45f  , -0.45f , 0.035f ,  0.55f );
+
+    
+    // ==================== Border Lines ===========================                
+
+    glColor3f(0.0f, 0.0f, 0.0f);
+
+    for (int i = -3; i <= 3; i++)
+    {
+        float baseY = 0.0f;
+        float x = i * 0.045f;
+
+        drawLine(x + 0.01f , baseY , 
+                 x + 0.01f , baseY + 0.22f ); // vetical line
+        
+        for(int j = -3; j<= 3; j++)
+        {
+            float baseY = 0.0f;
+            float x = j * 0.045f;
+            
+            drawLine(x + 0.05f , baseY + 0.24  , x - 0.05f , baseY + 0.24f );        // Top border
+            drawLine(x + 0.05f , baseY + 0.22f , x - 0.05f , baseY + 0.22f );         // Top border
+            drawLine(x + 0.2f  , baseY - 0.2   , x - 0.2f  , baseY - 0.2f  );         // mid border       
+            drawLine(x + 0.2f  , baseY - 0.21  , x - 0.2f  , baseY - 0.21f );         // mid border    
+            drawLine(x - 0.05f , baseY - 0.4f  , x + 0.05f , baseY - 0.4f  );  // bottom border of window
+            drawLine(x - 0.05f , baseY - 0.41f , x + 0.05f , baseY - 0.41f );  // bottom border of window
+        }
+        
+    }
+
+
+}
+
+
+/* =============== MAIN BUILDING WALL ================== */
+
+void drawMainWall()
+{
+    /* Large horizontal wall */
+    glColor3f(0.48f, 0.30f, 0.19f);
+
+    drawRectangle(-0.70f, -0.45f, 0.70f, -0.45f,
+                   0.70f, 0.05f,
+                  -0.70f, 0.05f);
+
+    /* Roof */
+    glColor3f(0.38f, 0.22f, 0.15f);
+
+    drawRectangle(-0.70f, 0.05f, 
+                   0.70f, 0.05f,
+                   0.70f, 0.14f,
+                  -0.70f, 0.14f);
+
+                  
+       /* WALL vertical ribs roof */
+
+    glColor3f(0.0f, 0.0f, 0.0f);
+
+    for (int i = -15; i <= 15; i++)
+    {
+        float baseY = 0.0f;
+        float x = i * 0.045f;
+
+        drawLine(x + 0.01f , baseY         ,
+                 x + 0.01f , baseY + 0.14f ); // vetical line
+        
+        for(int j = -12; j<= 12; j++)     // Horizontal line
+        {
+            float baseY = 0.0f;
+            float x = j * 0.045f;
+            
+            drawLine(x + 0.2f , baseY         , x - 0.2f , baseY         );         // Top border
+            drawLine(x + 0.2f , baseY -0.01f  , x - 0.2f , baseY - 0.01f );         // Top border
+            drawLine(x + 0.2f , baseY - 0.2   , x - 0.2f , baseY - 0.2f  );         // mid border         
+            drawLine(x + 0.2f , baseY - 0.21  , x - 0.2f , baseY - 0.21f );         // mid border  
+            drawLine(x - 0.2f , baseY - 0.4f  , x + 0.2f , baseY - 0.4f  );  // bottom border of window
+            drawLine(x - 0.2f , baseY - 0.41f , x + 0.2f , baseY - 0.41f );  // bottom border of window
+        }
+        
+    }
+
+
+    /* Lower arches  ground windows*/
+
+    for (float x = -0.60f; x <= 0.60f; x += 0.20f)
+    {
+        drawGothicWindow(x , -0.42f , 0.12f, 0.18f);
+    }
+
+    /* Upper arches 1st floor windows */
+
+    for (float x = -0.65f; x <= 0.65f; x += 0.12f)
+    {
+        drawGothicWindow(x , -0.12f , 0.08f, 0.15f);
+    }
+}
+
+
+/* ================ BUILDING OUTLINE / DECORATION ============== */
+
+void drawDecorations()
+{
+    glColor3f(0.12f, 0.10f, 0.08f);
+
+    glLineWidth(2.0f);
+
+    /* Horizontal lines */
+
+    // drawLine(-0.70f, -0.30f,
+    //          0.70f, -0.30f);
+
+    drawLine(-0.70f , -0.05f , 0.70f , -0.05f );
+    drawLine(-0.70f ,  0.05f , 0.70f ,  0.05f );
+
+    /* Small vertical decorative pillars */
+
+    drawTowerRoof(-0.69f  ,  0.26f , 0.05f, 0.08f);
+       drawPillar(-0.70f  , -0.45f , 0.025f,  0.70f);                           //drawPillar( x, y, Weight, height);
+    drawTowerRoof(0.69f   ,  0.26f , 0.05f,  0.08f);                       
+       drawPillar(0.68f   , -0.45f , 0.025f,   0.70f);
+
+    drawTowerRoof(-0.89f  ,  0.26f , 0.05f,   0.08f);
+       drawPillar(-0.90f  , -0.45f , 0.025f,  0.70f);                           //drawPillar( x, y, Weight, height);
+    drawTowerRoof(0.89f   ,  0.26f , 0.05f,   0.08f);                       
+       drawPillar(0.88f   , -0.45f , 0.025f,  0.70f);
+}
+
+
+/* ================ ENTIRE BUILDING ================== */
+
+void drawBuilding()
+{
+    drawMainWall();
+
+    drawSideTower(-0.79f  ); //Left Tower
+    drawSideTower( 0.79f  );  // Right Tower
+
+    drawCenterTower();
+
+    drawDecorations();
+}
+
+
+/* =================== GROUND ===================== */
+
+void drawGround()
+{
+    glColor3f(0.62f, 0.45f, 0.30f);
+
+    drawRectangle( -0.95f, -0.48f,
+                    0.95f, -0.48f,
+                    0.95f, -0.44f,
+                   -0.95f, -0.44f);
+}
+
+
+void drawRoad()
+{   
+
+     glColor3f(0.25f, 0.25f, 0.25f);
+    drawRectangle(-1.0f, -0.48f,
+                   1.0f, -0.48f,
+                   1.0f, -1.0f,
+                  -1.0f, -1.0f);
+
+    float baseY = 0.0f;
+    float x = 0.0f;
+
+    glColor3f(1.0f, 1.0f, 1.0f);
+    drawLine(x - 1.0f , baseY - 0.72f,  x + 1.0f , baseY - 0.72f );  // bottom border of window
+    drawLine(x - 1.0f , baseY - 0.74f,  x + 1.0f , baseY - 0.74f );  // bottom border of window
+
+
+}
+
+
+/* =============== BACKGROUND =============== */
+
+void drawBackground()
+{
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    drawRectangle(-1.0f , -1.0f,
+                   1.0f , -1.0f,
+                   1.0f , 1.0f,
+                  -1.0f , 1.0f);
+}
