@@ -4,7 +4,13 @@
 
 | Monument | Person Responsible | Status |
 |----------|--------------------|--------|
-| Red Fort | Shriraj | Not done |
+| Red Fort | Shriraj            |Not done|
+|Agra fort|Prashant|Not done|
+|Sarnath Temple| Mrunali|Not done|
+|Chola Temples|Rugved|Not done|
+|CSMT|Ankush|Not done|
+|Hampi|Siddharth|Not done|
+|Konark temple|Lakshmi Priya|Not done|
 
 
 

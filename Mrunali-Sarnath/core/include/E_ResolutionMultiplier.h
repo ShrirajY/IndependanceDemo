@@ -1,1 +1,0 @@
-void Resize(int , int );

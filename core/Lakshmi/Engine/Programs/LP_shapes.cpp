@@ -1,5 +1,5 @@
 #include <GL/glut.h>
-#include "../Headers/Ng_shapes.h"
+#include "../Headers/LP_shapes.h"
 
 void draw_horizontal_stripes(float x_start, float x_end, float y_bottom, float y_top, float spacing,
                              float r, float g, float b, float cx, float cy, float sx, float sy) {
