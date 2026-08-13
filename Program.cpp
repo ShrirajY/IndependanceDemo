@@ -1,6 +1,7 @@
 #include <GL/freeglut.h>
 #include "Monuments/Lakshmi/Headers/Konark.h"
 #include "Monuments/Shriraj/Headers/RedFort.h"
+#include "Monuments/Mrunali/Headers/Sarnath.h"
 
 bool bIsFullScreen = false;
 float elapsedTimeSeconds = 0.0f;
@@ -57,6 +58,7 @@ void display(void)
     glLoadIdentity();
     drawKonark(0.0f - elapsedTimeSeconds, 0.0f, 1.0f, 1.0f);
     draw_redfort(2.0 - elapsedTimeSeconds, 0.0, 0.5, 0.5);
+    DrawSarnathTemple(4.0f - elapsedTimeSeconds, 0.0f, 1.0f, 1.0f);
     glutSwapBuffers();
 }
 
