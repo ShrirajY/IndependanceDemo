@@ -27,3 +27,5 @@ void drawCholaTemple(float centerX, float centerY, float scaleX, float scaleY)
 
 	drawQuad(0.08f, 0.05f, 0.72f, -0.55f, 0.8f, 0.4f, 0.2f);
 }
+
+// updating to push
