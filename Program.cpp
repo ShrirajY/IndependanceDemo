@@ -2,6 +2,8 @@
 #include "Monuments/Lakshmi/Headers/Konark.h"
 #include "Monuments/Shriraj/Headers/RedFort.h"
 #include "Monuments/Mrunali/Headers/Sarnath.h"
+// #include "nameplate/Nameplate.h"
+#include <math.h>
 
 bool bIsFullScreen = false;
 float elapsedTimeSeconds = 0.0f;
@@ -56,9 +58,15 @@ void display(void)
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    drawKonark(0.0f - elapsedTimeSeconds, 0.0f, 1.0f, 1.0f);
-    draw_redfort(2.0 - elapsedTimeSeconds, 0.0, 0.5, 0.5);
-    DrawSarnathTemple(4.0f - elapsedTimeSeconds, 0.0f, 1.0f, 1.0f);
+
+    // drawNameplate("Red Fort", 0.0 - elapsedTimeSeconds, 0.6, 0.8, 0.2);
+    // drawKonark(0.0f - elapsedTimeSeconds, 0.0f, 0.8f, 0.8f);
+    // draw_redfort(2.0 - elapsedTimeSeconds, 0.0, 0.5, 0.5);
+    // DrawSarnathTemple(4.0f - elapsedTimeSeconds, 0.0f, 0.8f, 0.8f);
+
+    DrawSarnathTemple(0.0, 0.0, 1.0, 1.0);
+
+    // draw_redfort(0.0, 0.0, 0.5 + 0.5 * sin(elapsedTimeSeconds), 0.5 + 0.5 * sin(elapsedTimeSeconds));
     glutSwapBuffers();
 }
 

@@ -144,7 +144,7 @@ void Top(float tx, float ty, float scale)
 
 	for(float i = 0.0f, j = 0.60f; i < 21.0f, j < 0.74f; i = i + 0.08f, j = j + 0.02f)
 	{
-    	DrawFlower(tx - 0.3f, ((0.25f - i) * scale) + ty, (j) * scale);
+    	DrawFlower((-0.3f * scale) + tx, ((0.25f - i) * scale) + ty, (j) * scale);
 	}
 
 	// --------------  3  right small triangle  -----------------------------------
@@ -152,7 +152,7 @@ void Top(float tx, float ty, float scale)
 
 	for(float i = 0.0f, j = 0.60f; i < 21.0f, j < 0.74f; i = i + 0.08f, j = j + 0.02f)
 	{
-		DrawFlower(tx + 0.3f, ((0.25f - i) * scale) + ty, (j) * scale);
+		DrawFlower((0.3f * scale) + tx, ((0.25f - i) * scale) + ty, (j) * scale);
 	}
 }
 
