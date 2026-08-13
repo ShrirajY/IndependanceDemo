@@ -122,6 +122,15 @@ void drawTriangle(float x, float y, float tx, float ty, float scale, float r, fl
 	glVertex3f( x        + tx, -y + ty, scale);
 	glEnd();
 }
+void drawRATriangle(float x, float y, float tx, float ty, float scale, float r, float g, float b)
+{
+	glBegin(GL_TRIANGLES);
+	glColor3f(r, g, b);
+	glVertex3f( x + 0.001f + tx,  y + ty, scale);
+	glVertex3f(-x          + tx, -y + ty, scale);
+	glVertex3f( x          + tx, -y + ty, scale);
+	glEnd();
+}
 
 void drawLines(float x, float y, float tx, float ty, float scale, float r, float g, float b)
 {
@@ -250,18 +259,6 @@ void drawShikhar(float tlx, float tly, float trx, float trY, float brx, float br
 	glVertex3f(blx, bly, scale);
 	glEnd();
 }
-
-//void drawTank(float x, float y, float Angle, float tx, float ty, float r, float g, float b)
-//{
-//	drawQuadOC(0.05f, 0.30f, tankx - 0.13f, tanky, 0.2f, 0.2f, 0.2f);
-//	drawQuadOC(0.05f, 0.30f, tankx + 0.13f, tanky, 0.2f, 0.2f, 0.2f);
-//	drawQuadOC(0.12f, 0.25f, tankx, tanky, 0.1f, 0.3f, 0.2f);
-//	drawQuadOC(0.15f, 0.20f, tankx, tanky, 0.1f, 0.3f, 0.2f);
-//	drawQuadOC(0.12f, 0.20f, tankx, tanky, 0.1f, 0.4f, 0.1f);
-//	drawQuadOC(0.03f, 0.03f, tankx + 0.08f, tanky + 0.14f, 0.1f, 0.5f, 0.2f);
-//	drawQuadOC(0.03f, 0.03f, tankx + 0.08f, tanky + 0.00f, 0.1f, 0.5f, 0.2f);
-//	drawQuadOC(0.03f, 0.03f, tankx + 0.08f, tanky - 0.14f, 0.1f, 0.5f, 0.2f);
-//}
 
 
 // updating to push

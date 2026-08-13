@@ -8,6 +8,7 @@ void drawRectangle	  (float w, float h, float tx, float ty, float theta, float r
 void drawCircle		  (float rad, float tx, float ty, float r, float g, float b);
 void drawEllipse	  (float rx, float ry, float rad, float tx, float ty, float r, float g, float b);
 void drawTriangle	  (float x, float y, float tx, float ty, float scale, float r, float g, float b);
+void drawRATriangle	  (float x, float y, float tx, float ty, float scale, float r, float g, float b);
 void drawLines		  (float x, float y, float tx, float ty, float scale, float r, float g, float b);
 void drawCircleBorder (float rad, float tx, float ty, float r, float g, float b);
 void drawMovingQuad   (float x, float y, float tx, float ty, float r, float g, float b);
@@ -18,8 +19,6 @@ void draw2DTVTree	  (float x, float y);
 void drawMiddleWall	  (float tlx, float tly, float trx, float trY, float brx, float bry, float blx, float bly, float scale, float r, float g, float b);
 void drawSideWall	  (float tlx, float tly, float trx, float trY, float brx, float bry, float blx, float bly, float scale, float r, float g, float b);
 void drawShikhar	  (float tlx, float tly, float trx, float trY, float brx, float bry, float blx, float bly, float scale, float r, float g, float b);
-
-//void drawTank(float x, float y, float Angle, float tx, float ty, float r, float g, float b);
 
 struct RD_GE_VEC3
 {

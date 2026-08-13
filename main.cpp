@@ -1,6 +1,7 @@
 #include <GL/freeglut.h>
 #include <stdio.h>
 #include "core/Rugved/RSD_BINE/Headers/shapes.h"
+#include "core/Rugved/RSD_BINE/Headers/objects.h"
 #include "Monuments/Rugved/Headers/cholaTemple.h"
 #include "core/Utils.h"
 
@@ -49,7 +50,7 @@ int main(int argc, char* argv[])
 void initialize(void)
 {
 	// code
-	glClearColor(0.2f, 0.8f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 void resize(int width, int height)
