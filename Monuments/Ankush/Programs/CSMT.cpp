@@ -597,9 +597,9 @@ void drawBuilding(float scaleFactor, float translateX, float translateY)
 
     drawDecorations(scaleFactor, translateX, translateY);
 
-    drawGround(scaleFactor, translateX, translateY);
+    // drawGround(scaleFactor, translateX, translateY);
 
-    drawRoad(scaleFactor, translateX, translateY);
+    // drawRoad(scaleFactor, translateX, translateY);
 }
 
 

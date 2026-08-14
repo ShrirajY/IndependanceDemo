@@ -8,9 +8,9 @@
 void drawHampi(float centerX, float centerY, float scaleX, float scaleY)
 {
     float scaleXInPercent, scaleYInPercent;
-    scaleXInPercent = scaleYInPercent = 100.0f;
+    scaleXInPercent = scaleYInPercent = scaleX * 100.0f;
     float width = 0.5f, height = 0.15f;
-    float translationX = 0.0f, translationY = 0.0f;
+    float translationX = centerX, translationY = centerY;
     float radius = 0.01f;
     float theta = 0.0f;
     float r, g, b, a;
