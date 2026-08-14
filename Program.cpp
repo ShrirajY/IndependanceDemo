@@ -9,6 +9,7 @@
 #include "core/Shriraj/Engine/Headers/Blend_intro.h"
 #include "core/Shriraj/Engine/GlyphDS/Ng_glyph_DS.h"
 #include "nameplate/Nameplate.h"
+#include "Monuments/Rugved/Headers/cholaTemple.h"
 #include <math.h>
 
 bool bIsFullScreen = false;
@@ -246,7 +247,7 @@ void initialize(void)
     AddMonument(DrawSarnathTemple,  "Sarnath Temple",      -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
     // AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
     AddMonument(DrawCSMTAdapter,    "CSMT",                -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
-
+    AddMonument(drawCholaTemple, "Chola Temple", -1.0, 1.0, 0.5, 0.0, 0.5);
 }
 
 void resize(int width, int height)

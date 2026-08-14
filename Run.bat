@@ -8,6 +8,7 @@ cl.exe /c /EHsc /I ./external/freeglut/include Program.cpp ./Monuments/Shriraj/P
     ./core/Ankush/Engine/Programs/Aa_shapes.cpp ./Monuments/Ankush/Programs/CSMT.cpp ^
     ./nameplate/Nameplate.cpp ./core/Shriraj/Engine/GlyphDS/Ng_glyph_DS.cpp ^
     ./core/Prashant/Program/E_PG_2DShapes.cpp ./Monuments/Prashant/Program/AgraFort.cpp ^
+    ./core/Rugved/RSD_BINE/Programs/objects.cpp ./core/Rugved/RSD_BINE/Programs/shapes.cpp ./Monuments/Rugved/Programs/cholaTemple.cpp^
     /Fobuild\
 
 link.exe build\Program.obj ^
@@ -26,6 +27,9 @@ link.exe build\Program.obj ^
     build\Ng_glyph_DS.obj ^
     build\AgraFort.obj ^
     build\E_PG_2DShapes.obj ^
+    build\objects.obj ^
+    build\shapes.obj ^
+    build\cholaTemple.obj ^
     /LIBPATH:./external/freeglut/lib/x64 freeglut.lib /SUBSYSTEM:CONSOLE
 
 Program.exe

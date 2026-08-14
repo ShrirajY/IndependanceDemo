@@ -1,0 +1,3 @@
+void drawCholaTemple(float centerX, float centerY, float scaleX, float scaleY);
+
+// updating to push
