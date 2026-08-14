@@ -1,5 +1,5 @@
 #include <GL/glut.h>
-#include "../../../core/Lakshmi/Engine/Headers/Ng_shapes.h"
+#include "../../../core/Lakshmi/Engine/Headers/LP_shapes.h"
 
 void drawKonark(float centerX, float centerY, float scaleX, float scaleY) {
     // Structural color palette definitions

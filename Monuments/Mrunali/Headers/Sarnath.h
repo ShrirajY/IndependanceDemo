@@ -1,0 +1,1 @@
+void DrawSarnathTemple(float tx, float ty, float scaleX, float scaleY);
