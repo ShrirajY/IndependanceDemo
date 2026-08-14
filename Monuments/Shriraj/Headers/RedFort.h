@@ -1,1 +1,1 @@
-void drawRedFort(float centerX, float centerY, float scaleX, float scaleY);
+void draw_redfort(float x, float y, float scaleX, float scaleY);
