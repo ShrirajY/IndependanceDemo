@@ -1,6 +1,6 @@
 #include <GL/freeglut.h>
 #include <math.h>
-#include "include/AgraFort.h"
+#include "../include/AgraFort.h"
 
 float sineLerp(float a, float b, float t) {
     float sineFactor = (sinf(t * 3.14159265f - 1.57079632f) + 1.0f) * 0.5f;

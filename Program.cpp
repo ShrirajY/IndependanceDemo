@@ -4,7 +4,10 @@
 #include "Monuments/Mrunali/Headers/Sarnath.h"
 #include "Monuments/Siddharth/Headers/Hampi.h"
 #include "Monuments/Ankush/Headers/CSMT.h"
+#include "Monuments/Prashant/include/AgraFort.h"
 #include "core/Shriraj/Engine/Headers/india_draw_map.h"
+#include "core/Shriraj/Engine/Headers/Blend_intro.h"
+#include "core/Shriraj/Engine/GlyphDS/Ng_glyph_DS.h"
 #include "nameplate/Nameplate.h"
 #include <math.h>
 
@@ -66,7 +69,7 @@ typedef struct
     float           colorB;
 } MonumentInfo;
 
-#define MAX_MONUMENTS 5
+#define MAX_MONUMENTS 7
 MonumentInfo monuments[MAX_MONUMENTS];
 int monumentCount = 0;
 
@@ -80,7 +83,7 @@ void AddMonument(DrawMonument drawFunc, const char* name, float finalX, float fi
     monuments[monumentCount].name       = name;
     monuments[monumentCount].finalX     = finalX;
     monuments[monumentCount].finalY     = finalY;
-    monuments[monumentCount].startDelay = (float)monumentCount * TOTAL_MONUMENT_DURATION;
+    monuments[monumentCount].startDelay = 27.0 + (float)monumentCount * TOTAL_MONUMENT_DURATION;
     monuments[monumentCount].colorR     = colorR;
     monuments[monumentCount].colorG     = colorG;
     monuments[monumentCount].colorB     = colorB;
@@ -183,12 +186,17 @@ void DrawCSMTAdapter(float x, float y, float scaleX, float scaleY)
     drawBuilding(scaleX, x, y);
 }
 
+void drawAgraFortAdapter(float x, float y, float scaleX, float scaleY)
+{
+    DrawAgraFortScene(x, y, scaleX);
+}
+
 // All monuments (by startDelay order) have reached "Done" once global
 // time passes monumentCount * TOTAL_MONUMENT_DURATION - this is that
 // check, exposed as its own function so display() reads as a single line.
 int AreAllMonumentsSettled(float globalTime)
 {
-    return(globalTime >= (float)monumentCount * TOTAL_MONUMENT_DURATION);
+    return(globalTime >= 27.0 + 35.0);
 }
 
 int main(int argc, char* argv[])
@@ -232,11 +240,13 @@ void initialize(void)
     // these for the monuments' real projected positions on the India
     // map once you know that mapping, so each one parks roughly where
     // it actually sits geographically.
+    AddMonument(drawAgraFortAdapter, "Agra Fort", 1.0, 1.0, 1.0, 1.0, 0.0);
     AddMonument(drawKonark,         "Konark Sun Temple", 0.2f, -0.16f, 1.00f, 0.60f, 0.00f); // saffron
     AddMonument(draw_redfort,       "Red Fort",          -0.4f,  0.7f, 0.85f, 0.10f, 0.10f); // red
     AddMonument(DrawSarnathTemple,  "Sarnath Temple",      -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
-    AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
+    // AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
     AddMonument(DrawCSMTAdapter,    "CSMT",                -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
+
 }
 
 void resize(int width, int height)
@@ -252,6 +262,8 @@ void resize(int width, int height)
     glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
+int introFlag = 0;
+
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -264,6 +276,21 @@ void display(void)
     if (showIndiaMap)
     {
         drawIndiaMap();
+    }
+
+
+    if (elapsedTimeSeconds < 28.0f)
+    {
+        if(introFlag == 0)
+        {
+            introFlag = DrawIndiaBlendIntro();
+            // glColor3f(0.0 + elapsedTimeSeconds * 0.2, 0.0 + elapsedTimeSeconds * 0.2, 0.0 + elapsedTimeSeconds * 0.2);
+            // Ng_drawText("INCREDIBLE INDIA", -0.9, 0.0, 0.1, 0.1, 0.03, 0.02);
+        }
+        else
+        {
+
+        }
     }
 
     int i;

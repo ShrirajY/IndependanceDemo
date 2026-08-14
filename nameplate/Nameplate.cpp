@@ -15,7 +15,7 @@ void drawNameplate(
     const float scaleX = 0.05f;
     const float scaleY = 0.05f;
     const float letterSpacing = 0.03f;
-    const float thickness = 0.02f;
+    const float thickness = 0.01f;
 
     // Must match Ng_drawText's actual glyph width formula: (4/6) * scaleX
     const float characterWidth = (4.0f / 6.0f) * scaleX;
