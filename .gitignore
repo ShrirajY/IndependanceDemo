@@ -1,2 +1,6 @@
 *.obj
 *.exe
+.vs
+.vscode
+\external
+*.bat
