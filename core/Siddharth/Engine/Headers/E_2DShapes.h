@@ -91,4 +91,5 @@ void  drawLine(float width, float x1, float y1, float x2, float y2, float red, f
 //////////////////////////////
 // Circle drawing functions //
 //////////////////////////////
-void  drawCircle(float scaleInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha);
+void  drawCircleWithPolygon(float scaleXInPercent, float scaleYInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha);
+void  drawCircleWithLine(float scaleXInPercent, float scaleYInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha, float lineWidth);

@@ -13,7 +13,7 @@ void drawQuad(float scaleXInPercent, float scaleYInPercent, float width, float h
     x0 = -width / 2.0f, y0 = height / 2.0f;
     x = x0 * cosf(theta) - y0 * sinf(theta);
 
-    glColor4f(r * 0.25f, g * 0.25f, b * 0.25f, alpha);
+    glColor4f(r, g, b, alpha);
     glBegin(GL_QUADS);
     {
         x0 = (-width / 2.0f) * scaleX, y0 = (height / 2.0f) * scaleY;
@@ -69,20 +69,40 @@ void  drawLine(float width, float x1, float y1, float x2, float y2, float red, f
     glEnd();
 }
 
-void  drawCircle(float scaleInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha)
+void __drawCircle(float scaleXInPercent, float scaleYInPercent, float radius, float tx, float ty)
+{
+    float scaleX = scaleXInPercent / 100.0f;
+    float scaleY = scaleYInPercent / 100.0f;
+    float t = 0.0f, x, y;
+
+    for(; t <= 2 * M_PI; t = t + 0.01f)
+    {
+        x = radius * cos(t);
+        y = radius * sin(t);
+        x = x * scaleX + tx;
+        y = y * scaleY + ty;
+        glVertex3f(x, y, 0.0f);
+    }
+}
+
+void  drawCircleWithPolygon(float scaleXInPercent, float scaleYInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha)
 {
     glColor4f(red, green, blue, alpha);
     glBegin(GL_POLYGON);
     {
-        float t = 0.0f, x, y;
-        for(; t <= 2 * M_PI; t = t + 0.01f)
-        {
-            x = radius * cos(t);
-            y = radius * sin(t);
-            x = x + tx;
-            y = y + ty;
-            glVertex3f(x, y, 0.0f);
-        }
+        __drawCircle(scaleXInPercent, scaleYInPercent, radius, tx, ty);
+    }
+    glEnd();
+}
+
+void  drawCircleWithLine(float scaleXInPercent, float scaleYInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha, float lineWidth)
+{
+    glColor4f(red, green, blue, alpha);
+    glBegin(GL_LINES);
+    {
+        glLineWidth(lineWidth);
+        __drawCircle(scaleXInPercent, scaleYInPercent, radius, tx, ty);
+        glLineWidth(1);
     }
     glEnd();
 }
@@ -92,13 +112,13 @@ void  renderRectangle(Rectangle_t rect)
 {
     // variables
     float x, y;
-    float width = rect.width;
+    float width  = rect.width;
     float height = rect.height;
-    float theta = rect.transform.rotate.theta;
+    float theta  = rect.transform.rotate.theta;
     float scaleX = rect.transform.scale.scaleX;
     float scaleY = rect.transform.scale.scaleY;
-    float tx = rect.transform.translate.tx;
-    float ty = rect.transform.translate.ty;
+    float tx     = rect.transform.translate.tx;
+    float ty     = rect.transform.translate.ty;
     int i;
 
     // code
@@ -153,7 +173,7 @@ void renderCircle(Circle_t circle)
     float tx = circle.transform.translate.tx;
     float ty = circle.transform.translate.ty;
     
-    drawCircle(100.0f, radius, tx, ty, circle.color.red, circle.color.green, circle.color.blue, circle.color.alpha);
+    drawCircleWithPolygon(100.0f, 100.0f, radius, tx, ty, circle.color.red, circle.color.green, circle.color.blue, circle.color.alpha);
 }
 
 // line_t functions

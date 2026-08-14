@@ -11,20 +11,51 @@ void drawHampi(float centerX, float centerY, float scaleX, float scaleY)
     scaleXInPercent = scaleYInPercent = 100.0f;
     float width = 0.5f, height = 0.15f;
     float translationX = 0.0f, translationY = 0.0f;
+    float radius = 0.01f;
     float theta = 0.0f;
     float r, g, b, a;
-    r = g = a = 1.0f; b = 0.99f;
+    r = g = a = 1.0f; b = 1.0f;
 
+    /////////////////
+    // top - decor //
+    /////////////////
     drawHampiTempleOutline(scaleXInPercent, scaleYInPercent, translationX + 0.2f, translationY + -0.2f, r * 0.0f, g * 0.0f, b * 0.0f, a);
-    drawHampiTempleOutline(scaleXInPercent * 0.98f, scaleYInPercent * 0.98f, translationX + 0.2f, translationY + -0.2f, r * 0.92f, g * 0.92f, b * 0.92f, a * 0.15f);
-    drawHampiTempleTopSineLowerDecor(scaleXInPercent * 1.05f, scaleYInPercent, width / 2.0f, height / 2.0f, translationX + 0.22f, translationY + 0.605f, theta, r * 0.98f, g * 0.97f, b * 0.99f, a);
-    drawHampiTempleTopSineDecor(scaleXInPercent * 1.26f, scaleYInPercent, width / 4.0f, height / 2.0f, translationX - 0.04f, translationY + 0.63f, theta,  r * 0.98f, g * 0.97f, b * 0.99f, a);
-    drawHampiTempleTopSineDecor(scaleXInPercent * 1.34f, scaleYInPercent, width / 4.0f, height / 2.0f, translationX + 0.487f, translationY + 0.63f, theta, r * 0.98f, g * 0.97f, b * 0.99f, a);
-    drawHampiTempleTopSineDecor(scaleXInPercent * 1.42f, scaleYInPercent, width / 2.0f, height / 2.0f, translationX + 0.22f, translationY + 0.63f, theta,  r * 0.98f, g * 0.97f, b * 0.99f, a);
+    drawHampiTempleOutline(scaleXInPercent * 0.98f, scaleYInPercent * 0.98f, translationX + 0.2f, translationY + -0.2f, r * 0.92f, g * 0.92f, b * 0.92f, a * 0.11f);
+    // top - pillar decor objects
+    for(float x = -0.12f; x <= 0.6f; x = x + (radius * 10.0f))
+    {
+        float _radius = (x > -0.1f && x < 0.57f) ? 2 * radius : radius;
+        drawHampiTemplePillarDecor(scaleXInPercent, scaleYInPercent, _radius, translationX + x, translationY + 0.525f, r * 0.87f, g * 0.87f, b * 0.87f, a);
+    }
 
-    drawQuad(scaleXInPercent, scaleYInPercent, width / 4.5f, height / 3.75f, translationX - 0.14f, translationY + 0.03f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
-    drawQuad(scaleXInPercent, scaleYInPercent, width / 5.0f, height / 3.75f, translationX - 0.14f, translationY + 0.01f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a);
-    drawQuad(scaleXInPercent, scaleYInPercent, width / 6.0f, height / 3.75f, translationX - 0.14f, translationY + 0.0f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);   
+    // top - pillar
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 14.0f, height * 2.5f, translationX + 0.08f, translationY + 0.3f, theta, r * 0.87f, g * 0.87f, b * 0.87f, a);
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 14.0f, height * 2.5f, translationX + 0.28f, translationY + 0.3f, theta, r * 0.87f, g * 0.87f, b * 0.87f, a);
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 14.0f, height * 2.5f, translationX + 0.38f, translationY + 0.3f, theta, r * 0.87f, g * 0.87f, b * 0.87f, a);
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 14.0f, height * 2.5f, translationX + 0.48f, translationY + 0.3f, theta, r * 0.87f, g * 0.87f, b * 0.87f, a);
+
+    // top - sine decors
+    drawHampiTempleTopSineLowerDecor(scaleXInPercent * 1.05f, scaleYInPercent, width / 2.0f, height / 2.0f, translationX + 0.22f, translationY + 0.605f, theta, r * 0.08f, g * 0.07f, b * 0.09f, a);
+    drawHampiTempleTopSineDecor(scaleXInPercent * 1.26f, scaleYInPercent, width / 4.0f, height / 2.0f, translationX - 0.04f, translationY + 0.63f, theta,  r * 0.25f, g * 0.25f, b * 0.25f, a);
+    drawHampiTempleTopSineDecor(scaleXInPercent * 1.34f, scaleYInPercent, width / 4.0f, height / 2.0f, translationX + 0.487f, translationY + 0.63f, theta, r * 0.25f, g * 0.25f, b * 0.25f, a);
+    drawHampiTempleTopSineDecor(scaleXInPercent * 1.42f, scaleYInPercent, width / 2.0f, height / 2.0f, translationX + 0.22f, translationY + 0.63f, theta,  r * 0.25f, g * 0.25f, b * 0.25f, a);
+
+    ////////////////////
+    // middle - decor //
+    ////////////////////
+    drawHampiTempleMiddleDecor(scaleXInPercent, scaleYInPercent, width, height, translationX, translationY, theta, r * 0.25f, g * 0.25f, b * 0.25f, a);
+
+    ///////////////////
+    // lower - decor //
+    ///////////////////
+    drawHampiTempleLowerDecor(scaleXInPercent, scaleYInPercent, radius * 10.0f, width, height, translationX, translationY, theta, r * 0.85f, g * 0.85f, b * 0.85f, a);
+}
+
+// the flowery looking artefact from which the pillar comes out
+void drawHampiTemplePillarDecor(float scaleXInPercent, float scaleYInPercent, float radius, float tx, float ty, float red, float green, float blue, float alpha)
+{
+    drawCircleWithPolygon(scaleXInPercent, scaleYInPercent * 3.0f, radius, tx, ty, red, green, blue, alpha);
+    drawCircleWithPolygon(scaleXInPercent * 3.0f, scaleYInPercent, radius, tx, ty, red, green, blue, alpha);
 }
 
 // hampi temple outline
@@ -278,6 +309,85 @@ void drawHampiTempleTopSineLowerDecor(float scaleInXPercent, float scaleFactorYI
             glVertex3f(x + tx, y1 + ty, 0.0f);
             glVertex3f(x + tx, y2 + ty, 0.0f);
         }
+    }
+    glEnd();
+}
+
+void drawHampiTempleMiddleDecor(float scaleXInPercent, float scaleYInPercent, float width, float height, float tx, float ty, float theta, float r, float g, float b, float a)
+{
+    // Middle - higher decor
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 5.0f, height / 3.75f, tx - 0.058f, ty + 0.11f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a);   // middle black
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 4.5f, height / 3.75f, tx - 0.058f, ty + 0.13f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 6.0f, height / 3.75f, tx - 0.058f, ty + 0.1f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);
+
+    drawQuad(scaleXInPercent * 3.5f, scaleYInPercent, width / 5.0f, height / 3.45f, tx + 0.2f, ty + 0.11f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a); // middle black bar
+    drawQuad(scaleXInPercent * 3.0f, scaleYInPercent, width / 4.5f, height / 3.45f, tx + 0.2f, ty + 0.13f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
+    drawQuad(scaleXInPercent * 3.6f, scaleYInPercent, width / 6.0f, height / 3.45f, tx + 0.2f, ty + 0.1f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);
+
+    drawQuad(scaleXInPercent * 1.65f, scaleYInPercent, width / 5.0f, height / 3.75f, tx + 0.48f, ty + 0.11f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a);   // middle black
+    drawQuad(scaleXInPercent * 1.65f, scaleYInPercent, width / 4.5f, height / 3.75f, tx + 0.48f, ty + 0.13f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
+    drawQuad(scaleXInPercent * 2.2f, scaleYInPercent, width / 6.0f, height / 3.75f, tx  + 0.48f, ty  + 0.1f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);
+
+    // Middle - lower decor
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 5.0f, height / 3.75f, tx - 0.14f, ty + 0.01f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a);   // middle black
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 4.5f, height / 3.75f, tx - 0.14f, ty + 0.03f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
+    drawQuad(scaleXInPercent, scaleYInPercent, width / 6.0f, height / 3.75f, tx - 0.14f, ty + 0.0f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);
+
+    drawQuad(scaleXInPercent * 5.5f, scaleYInPercent, width / 5.0f, height / 3.45f, tx + 0.2f, ty + 0.01f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a); // middle black bar
+    drawQuad(scaleXInPercent * 5.0f, scaleYInPercent, width / 4.5f, height / 3.45f, tx + 0.2f, ty + 0.03f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
+    drawQuad(scaleXInPercent * 5.6f, scaleYInPercent, width / 6.0f, height / 3.45f, tx + 0.2f, ty + 0.0f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);
+
+    drawQuad(scaleXInPercent * 1.65f, scaleYInPercent, width / 5.0f, height / 3.75f, tx + 0.58f, ty + 0.01f, theta, r * 0.2f, g * 0.2f, b * 0.2f, a);   // middle black
+    drawQuad(scaleXInPercent * 1.65f, scaleYInPercent, width / 4.5f, height / 3.75f, tx + 0.58f, ty + 0.03f + (height / 3.75f) / 2.0f, theta, r, g, b, a);
+    drawQuad(scaleXInPercent * 2.2f, scaleYInPercent, width / 6.0f, height / 3.75f, tx + 0.58f, ty + 0.0f + -(height / 3.75f) / 2.0f, theta, r, g, b, a);
+}
+
+void drawHampiTempleLowerDecor(float scaleXInPercent, float scaleYInPercent, float radius, float width, float height, float tx, float ty, float theta, float r, float g, float b, float a)
+{
+    for(float x = radius; x >= 0.0f; x = x - (radius / 5.0f))
+    {
+        drawCircleWithPolygon(scaleXInPercent * 1.54f, scaleYInPercent * 1.54f, x, tx + 0.49f, ty - 0.23f, r * 0.85f - 2*x, g * 0.85f - 2*x, b * 0.85f - 2*x, a);
+        drawCircleWithLine(scaleXInPercent * 1.54f, scaleYInPercent * 1.54f, x, tx + 0.49f, ty - 0.23f, r * 0.0f, g * 0.0f, b * 0.0f, a, 20.0f);
+    }
+
+    for(float x = radius; x >= 0.0f; x = x - (radius / 5.0f))
+    {
+        drawCircleWithPolygon(scaleXInPercent * 1.54f, scaleYInPercent * 1.54f, x, tx, ty - 0.23f, r * 0.85f - 2*x, g * 0.85f - 2*x, b * 0.85f - 2*x, a);
+        drawCircleWithLine(scaleXInPercent * 1.54f, scaleYInPercent * 1.54f, x, tx, ty - 0.23f, r * 0.0f, g * 0.0f, b * 0.0f, a, 3.0f);
+    }
+
+    drawQuad(scaleXInPercent * 2.0f, scaleYInPercent * 2.42f, width, height / 4.0f, tx + 0.27f, ty - 0.43f, theta, r * 0.25f, g * 0.25f, b * 0.25f, a);
+
+    // sine wave design
+    glBegin(GL_LINE_STRIP);
+    {
+        glLineWidth(20.0f);
+        glColor4f(r * 0.75f, g * 0.75f, b * 0.75f, a * 0.9f);
+        float angleStep = 0.05f;
+        float t_angle = 0.0f;
+        float amplitude = 0.04f, frequency = 8.0f;
+        for(float x = -width; x <= width; x = x + 0.05f, t_angle = t_angle + angleStep)
+        {
+            float y = amplitude * sinf(t_angle * frequency);
+            glVertex3f(x + tx + 0.27f, y + ty - 0.43f, 0.0f);
+        }
+        for(float x = -width; x <= width; x = x + 0.05f, t_angle = t_angle + angleStep)
+        {
+            float y = amplitude * cosf(t_angle * frequency);
+            glVertex3f(x + tx + 0.27f, y + ty - 0.43f, 0.0f);
+        }
+        
+        for(float x = width; x >= -width; x = x - 0.05f, t_angle = t_angle + angleStep)
+        {
+            float y = amplitude * sinf(t_angle * frequency);
+            glVertex3f(x + tx + 0.27f, y + ty - 0.43f, 0.0f);
+        }
+        for(float x = width; x >= -width; x = x - 0.05f, t_angle = t_angle + angleStep)
+        {
+            float y = amplitude * cosf(t_angle * frequency);
+            glVertex3f(x + tx + 0.27f, y + ty - 0.43f, 0.0f);
+        }
+        glLineWidth(1.0f);
     }
     glEnd();
 }
