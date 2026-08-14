@@ -4,6 +4,7 @@
 #include "Monuments/Mrunali/Headers/Sarnath.h"
 // #include "nameplate/Nameplate.h"
 #include <math.h>
+#include "Monuments/Siddharth/Headers/Hampi.h"
 
 bool bIsFullScreen = false;
 float elapsedTimeSeconds = 0.0f;
@@ -37,7 +38,9 @@ int main(int argc, char* argv[])
 
 void initialize(void)
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void resize(int width, int height)
@@ -67,6 +70,12 @@ void display(void)
     DrawSarnathTemple(0.0, 0.0, 1.0, 1.0);
 
     // draw_redfort(0.0, 0.0, 0.5 + 0.5 * sin(elapsedTimeSeconds), 0.5 + 0.5 * sin(elapsedTimeSeconds));
+    drawKonark(0.0f - elapsedTimeSeconds, 0.0f, 1.0f, 1.0f);
+    draw_redfort(2.0 - elapsedTimeSeconds, 0.0, 0.5, 0.5);
+    // drawHampi(0.0f, 0.0f, 0.0f, 0.0f);
+    // drawKonark(0.0f - elapsedTimeSeconds, 0.0f, 1.0f, 1.0f);
+    // draw_redfort(2.0 - elapsedTimeSeconds, 0.0, 0.5, 0.5);
+    drawHampi(0.0f, 0.0f, 0.0f, 0.0f);
     glutSwapBuffers();
 }
 
