@@ -95,7 +95,7 @@ void drawWindow(float x, float y, float width, float height) {
     mughalDesign(x, y - (height * 0.05f), 0.0f, height * 0.8f, width * 0.75f, innerR * 0.6f, innerG * 0.6f, innerB * 0.6f, innerR, innerG, innerB);
 }
 
-void drawRedFortScene(float x, float y, float scale) {
+void DrawAgraFortScene(float x, float y, float scale) {
     float darkR = 0.36f, darkG = 0.15f, darkB = 0.05f;
     float medR = 0.65f, medG = 0.32f, medB = 0.09f;
     float orgR = 0.93f, orgG = 0.49f, orgB = 0.10f;
