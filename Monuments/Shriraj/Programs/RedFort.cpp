@@ -316,5 +316,5 @@ void drawRedFort()
 
 void draw_redfort(float x, float y, float scaleX, float scaleY)
 {
-    drawRedFort(x, y, scaleX, scaleY);
+    drawRedFort(x, y, scaleX * 0.8f, scaleY * 1.1f);
 }
