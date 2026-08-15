@@ -6,7 +6,18 @@
 #include "Monuments/Ankush/Headers/CSMT.h"
 #include "core/Shriraj/Engine/Headers/india_draw_map.h"
 #include "nameplate/Nameplate.h"
+#include "outro/Headers/AnimatedText.h"
+#include "outro/Headers/musicnotes.h"
+#include "outro/Headers/OutroAnimation.h"
+
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <math.h>
+
+
+// Forward declarations
+void InitializeOutroAnimation(void);
+void DrawOutroAnimation(float globalTime);
 
 bool bIsFullScreen = false;
 float elapsedTimeSeconds = 0.0f;
@@ -28,6 +39,11 @@ int flag = 0;
 // either way, so swapping between the two modes doesn't touch drawing code.
 bool bUseManualMapControl = false;
 bool bShowIndiaMapManual  = false;   // only read when bUseManualMapControl == true
+
+// Outro animation text
+AnimatedTextInfo outroText;
+
+
 
 // ---------------------------------------------------------------------
 // Animation timing constants (seconds)
@@ -237,6 +253,11 @@ void initialize(void)
     AddMonument(DrawSarnathTemple,  "Sarnath Temple",      -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
     AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
     AddMonument(DrawCSMTAdapter,    "CSMT",                -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
+    
+    // Initialize outro animation sequence
+    InitializeOutroAnimation();
+
+    SetOutroStartTime((float)monumentCount * TOTAL_MONUMENT_DURATION);
 }
 
 void resize(int width, int height)
@@ -258,6 +279,8 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    // TEMPORARILY DISABLED FOR TESTING OUTRO ONLY
+    /*
     int showIndiaMap = bUseManualMapControl
                             ? bShowIndiaMapManual
                             : AreAllMonumentsSettled(elapsedTimeSeconds);
@@ -282,6 +305,10 @@ void display(void)
             }
         }
     }
+    */
+
+    // Draw outro animation with musical note synchronized text
+    DrawOutroAnimation(elapsedTimeSeconds);
 
     // Single condition gating the India map - flip bUseManualMapControl
     // above if you'd rather drive bShowIndiaMapManual yourself (key
@@ -332,6 +359,8 @@ void mouse(int button, int state, int spaceX, int spaceY)
     }
 }
 
+
+
 void uninitialize(void)
 {
     // code
@@ -345,6 +374,3 @@ void timer(int value)
 
     glutTimerFunc(16, timer, 0);
 }
-// cl.exe /c /EHsc /I D:\freeglut\include OGL.cpp
-
-// link.exe OGL.obj /LIBPATH:D:\freeglut\lib\x64 freeglut.lib /SUBSYSTEM:CONSOLE

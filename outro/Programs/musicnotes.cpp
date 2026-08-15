@@ -26,8 +26,8 @@ void drawEllipse(float centerX, float centerY, float rx, float ry, float angleDe
 }
 
 void drawQuarterNote(float cx, float cy, float scale) {
-    glColor3f(1.0f, 1.0f, 1.0f); // White color
-
+    //glColor3f(1.0f, 1.0f, 1.0f); // White color
+    glColor3f(1.0f, 0.75f, 0.15f);
     drawEllipse(cx, cy, 0.08f, 0.05f, 30.0f, scale);
 
     float stemOffsetX = 0.07f * scale;
@@ -40,8 +40,8 @@ void drawQuarterNote(float cx, float cy, float scale) {
 }
 
 void drawSlantedBeamedNotes(float cx, float cy, float scale) {
-    glColor3f(1.0f, 1.0f, 1.0f); // White color
-
+    //glColor3f(1.0f, 1.0f, 1.0f); // White color
+    glColor3f(1.0f, 0.75f, 0.15f);
     float dx = 0.25f * scale;
     float dy = 0.10f * scale;
     float stemOffsetX = 0.07f * scale;
@@ -69,7 +69,8 @@ void drawSlantedBeamedNotes(float cx, float cy, float scale) {
 }
 
 void drawHalfNote(float cx, float cy, float scale) {
-    glColor3f(1.0f, 1.0f, 1.0f); // White color
+    //glColor3f(1.0f, 1.0f, 1.0f); // White color
+    glColor3f(1.0f, 0.75f, 0.15f);
 
     float rx = 0.08f * scale;
     float ry = 0.05f * scale;
@@ -93,7 +94,8 @@ void drawHalfNote(float cx, float cy, float scale) {
 }
 
 void drawSharpNote(float cx, float cy, float scale) {
-    glColor3f(1.0f, 1.0f, 1.0f); // White color
+    //glColor3f(1.0f, 1.0f, 1.0f); // White color
+    glColor3f(1.0f, 0.75f, 0.15f);
 
     drawEllipse(cx, cy, 0.08f, 0.05f, 30.0f, scale);
 
@@ -125,7 +127,8 @@ void drawSharpNote(float cx, float cy, float scale) {
 }
 
 void drawBeamedEighthNotes(float cx, float cy, float scale) {
-    glColor3f(1.0f, 1.0f, 1.0f); // White color
+    //glColor3f(1.0f, 1.0f, 1.0f); // White color
+    glColor3f(1.0f, 0.75f, 0.15f);
 
     float dx = 0.2f * scale;
     float stemOffsetX = 0.07f * scale;

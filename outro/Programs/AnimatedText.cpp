@@ -26,7 +26,7 @@ AnimatedTextInfo AnimatedText_Create(
     info.centerY = centerY;
     info.scaleX = scaleX;
     info.scaleY = scaleY;
-    info.letterSpacing = 0.03f;
+    info.letterSpacing = 0.045f;
     info.thickness = 0.01f;
     
     info.colorR = colorR;
@@ -145,7 +145,7 @@ void AnimatedText_Draw(AnimatedTextInfo* info, float globalTime)
     // Split text into lines and draw each separately
     const char* text = info->text;
     const char* lineStart = text;
-    float lineHeight = finalScaleY * 1.8f;  // Triple the line spacing
+    float lineHeight = finalScaleY * 2.0f;  // Triple the line spacing
     int lineIndex = 0;
     
     // Count total lines first to center vertically
