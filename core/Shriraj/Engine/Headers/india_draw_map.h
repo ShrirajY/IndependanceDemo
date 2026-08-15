@@ -84,50 +84,128 @@ inline void drawRingsPartial(const float pts[][2], const int counts[],
 
 // The one function you call. Everything else lives inside it.
 inline void drawIndiaMap(float cx = 0.0f, float cy = 0.0f,
-                          float scale = 1.0f, bool reset = false) {
+                         float scale = 1.0f, bool reset = false) {
     static int stateDrawN = 0;
     static int outerDrawN = 0;
     static int stateTotalPts = 0;
     static int outerTotalPts = 0;
+
+    static int stateCallCounter = 0;
     static bool initialized = false;
 
-    const int drawStepState = 8; // state-border vertices added per call
-    const int drawStepOuter = 2;  // outer-border vertices added per call
+    // ============================================================
+    // CONFIGURATION
+    // ============================================================
+    // 3 = one outer-border update for every 3 state-border updates
+    //
+    // Change this to:
+    //     5 -> one outer update every 5 state updates
+    //     10 -> one outer update every 10 state updates
+    // etc.
+    const int stateCallsPerOuterCall = 6;
 
+    // Number of vertices added during one state update
+    const int drawStepState = 8;
+
+    // Number of vertices added during one outer update
+    const int drawStepOuter = 2;
+
+    // ============================================================
+    // INITIALIZATION
+    // ============================================================
     if (!initialized) {
-        for (int i = 0; i < stateNumLoops; ++i) stateTotalPts += stateCounts[i];
-        for (int i = 0; i < outerNumLoops; ++i) outerTotalPts += outerCounts[i];
+        for (int i = 0; i < stateNumLoops; ++i)
+            stateTotalPts += stateCounts[i];
+
+        for (int i = 0; i < outerNumLoops; ++i)
+            outerTotalPts += outerCounts[i];
+
         initialized = true;
     }
 
+    // ============================================================
+    // RESET
+    // ============================================================
     if (reset) {
         stateDrawN = 0;
         outerDrawN = 0;
+        stateCallCounter = 0;
     }
 
-    if (stateDrawN < stateTotalPts)
-        stateDrawN = std::min(stateTotalPts, stateDrawN + drawStepState);
-    if (outerDrawN < outerTotalPts)
-        outerDrawN = std::min(outerTotalPts, outerDrawN + drawStepOuter);
+    // ============================================================
+    // STATE BORDER
+    // ============================================================
+    if (stateDrawN < stateTotalPts) {
+        stateDrawN =
+            std::min(stateTotalPts,
+                     stateDrawN + drawStepState);
+    }
 
+    // ============================================================
+    // OUTER BORDER
+    // ============================================================
+    ++stateCallCounter;
+
+    if (stateCallCounter >= stateCallsPerOuterCall) {
+        stateCallCounter = 0;
+
+        if (outerDrawN < outerTotalPts) {
+            outerDrawN =
+                std::min(outerTotalPts,
+                         outerDrawN + drawStepOuter);
+        }
+    }
+
+    // ============================================================
+    // DRAW
+    // ============================================================
     glPushMatrix();
+
     glTranslatef(cx, cy, 0.0f);
-    glScalef(scale * INDIA_MAP_NORM, scale * INDIA_MAP_NORM, 1.0f);
+
+    glScalef(
+        scale * INDIA_MAP_NORM,
+        scale * INDIA_MAP_NORM,
+        1.0f
+    );
 
     glEnable(GL_LINE_SMOOTH);
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glBlendFunc(
+        GL_SRC_ALPHA,
+        GL_ONE_MINUS_SRC_ALPHA
+    );
+
     glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 
-    /* State borders — thin, dim grey */
+    // ------------------------------------------------------------
+    // State borders
+    // ------------------------------------------------------------
     glColor3f(0.55f, 0.55f, 0.55f);
-    glLineWidth(1.0f);
-    india_map_detail::drawRingsPartial(statePts, stateCounts, stateNumLoops, stateDrawN);
 
-    /* Outer national border — thick, bright white, on top */
+    glLineWidth(1.0f);
+
+    india_map_detail::drawRingsPartial(
+        statePts,
+        stateCounts,
+        stateNumLoops,
+        stateDrawN
+    );
+
+    // ------------------------------------------------------------
+    // Outer national border
+    // ------------------------------------------------------------
     glColor3f(1.0f, 1.0f, 1.0f);
+
     glLineWidth(3.0f);
-    india_map_detail::drawRingsPartial(outerPts, outerCounts, outerNumLoops, outerDrawN);
+
+    india_map_detail::drawRingsPartial(
+        outerPts,
+        outerCounts,
+        outerNumLoops,
+        outerDrawN
+    );
 
     glPopMatrix();
 }

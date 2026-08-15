@@ -22,6 +22,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include <math.h>
+#include <mmsystem.h>
 
 
 // =====================================================================
@@ -460,24 +461,22 @@ void drawAgraFortAdapter(
 int AreAllMonumentsSettled(
     float globalTime)
 {
-    if (monumentCount <= 0)
-        return 0;
+    // if (monumentCount <= 0)
+    //     return 0;
 
 
-    // Use the actual start time of the last
-    // registered monument.
-    MonumentInfo* lastMonument =
-        &monuments[monumentCount - 1];
+    // // Use the actual start time of the last
+    // // registered monument.
+    // MonumentInfo* lastMonument =
+    //     &monuments[monumentCount - 1];
 
 
-    float lastMonumentEndTime =
-        lastMonument->startDelay +
-        TOTAL_MONUMENT_DURATION;
-
+    // float lastMonumentEndTime =
+    //     lastMonument->startDelay +
+    //     TOTAL_MONUMENT_DURATION;
 
     return (
-        globalTime >=
-        lastMonumentEndTime
+        globalTime >= 28.0 + 35.0
     );
 }
 
@@ -561,6 +560,9 @@ int main(
 
 void initialize(void)
 {
+
+    bool returnVal = PlaySound(TEXT("music.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
     glClearColor(
         0.0f,
         0.0f,
@@ -688,7 +690,7 @@ void initialize(void)
 
     // Use exactly the same time for the outro.
     SetOutroStartTime(
-        mainAnimationEndTime+ 25.0f
+        mainAnimationEndTime+ 20.0f
     );
 }
 
@@ -915,7 +917,7 @@ void display(void)
 
     if (
         elapsedTimeSeconds >=
-        mainAnimationEndTime + 25.0f)
+        mainAnimationEndTime + 20.0f)
     {
         glClear(GL_COLOR_BUFFER_BIT);
         glLoadIdentity();
