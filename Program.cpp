@@ -688,7 +688,7 @@ void initialize(void)
 
     // Use exactly the same time for the outro.
     SetOutroStartTime(
-        mainAnimationEndTime
+        mainAnimationEndTime+ 25.0f
     );
 }
 
@@ -915,8 +915,10 @@ void display(void)
 
     if (
         elapsedTimeSeconds >=
-        mainAnimationEndTime)
+        mainAnimationEndTime + 25.0f)
     {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
         DrawOutroAnimation(
             elapsedTimeSeconds
         );
