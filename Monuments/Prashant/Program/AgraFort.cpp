@@ -96,6 +96,7 @@ void drawWindow(float x, float y, float width, float height) {
 }
 
 void DrawAgraFortScene(float x, float y, float scale) {
+
     float darkR = 0.36f, darkG = 0.15f, darkB = 0.05f;
     float medR = 0.65f, medG = 0.32f, medB = 0.09f;
     float orgR = 0.93f, orgG = 0.49f, orgB = 0.10f;

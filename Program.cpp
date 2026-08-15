@@ -38,7 +38,7 @@ bool bShowIndiaMapManual = false; // only read when bUseManualMapControl == true
 // ---------------------------------------------------------------------
 #define PHASE1_ENTER_DURATION 2.0f  // left of screen  -> center, scale fixed at 1.0 2.0
 #define PHASE2_HOLD_DURATION 2.0f   // stays at center, scale fixed at 1.0 2.0
-#define PHASE3_SHRINK_DURATION 3.0f // center -> final point, scale 1.0 -> 0.2 3.0
+#define PHASE3_SHRINK_DURATION 2.0f // center -> final point, scale 1.0 -> 0.2 3.0
 #define TOTAL_MONUMENT_DURATION (PHASE1_ENTER_DURATION + PHASE2_HOLD_DURATION + PHASE3_SHRINK_DURATION)
 
 #define ENTER_FROM_X -3.0f // off-screen point to the left
@@ -243,13 +243,14 @@ void initialize(void)
     // these for the monuments' real projected positions on the India
     // map once you know that mapping, so each one parks roughly where
     // it actually sits geographically.
-    AddMonument(drawAgraFortAdapter, "Agra Fort", 1.0, 1.0, 1.0, 1.0, 0.0);
-    AddMonument(drawKonark, "Konark Sun Temple", 0.2f, -0.16f, 1.00f, 0.60f, 0.00f);      // saffron
-    AddMonument(draw_redfort, "Red Fort", -0.4f, 0.7f, 0.85f, 0.10f, 0.10f);              // red
     AddMonument(DrawSarnathTemple, "Sarnath Temple", -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
-    // AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
+    AddMonument(drawCholaTemple, "Chola Temple", -0.25, -0.7, 0.5, 0.0, 0.5);
+    AddMonument(drawKonark, "Konark Sun Temple", 0.2f, -0.16f, 1.00f, 0.60f, 0.00f);      // saffron
+    AddMonument(drawHampi,          "Hampi",               -0.4f,  -0.42f, 0.80f, 0.60f, 0.20f); // sandstone
+    AddMonument(drawAgraFortAdapter, "Agra Fort", 0.05, 0.55, 1.0, 1.0, 0.0);
+    AddMonument(draw_redfort, "Red Fort", -0.55f, 0.65f, 0.85f, 0.10f, 0.10f);              // red
     AddMonument(DrawCSMTAdapter, "CSMT", -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
-    AddMonument(drawCholaTemple, "Chola Temple", -1.0, 1.0, 0.5, 0.0, 0.5);
+
 }
 
 void resize(int width, int height)
