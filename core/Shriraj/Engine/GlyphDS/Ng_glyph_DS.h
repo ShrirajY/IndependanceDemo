@@ -72,5 +72,8 @@ void Ng_drawLetterW(float centerX, float centerY, float scaleX, float scaleY, fl
 void Ng_drawLetterX(float centerX, float centerY, float scaleX, float scaleY, float thickness = NG_LETTER_DEFAULT_LINE_WIDTH);
 void Ng_drawLetterY(float centerX, float centerY, float scaleX, float scaleY, float thickness = NG_LETTER_DEFAULT_LINE_WIDTH);
 void Ng_drawLetterZ(float centerX, float centerY, float scaleX, float scaleY, float thickness = NG_LETTER_DEFAULT_LINE_WIDTH);
-
+void Ng_drawTextTricolor(const char* text, float centerY,
+                          float scaleX, float scaleY,
+                          float letterSpacing, float thickness,
+                          float brightness = 1.0f);
 #endif // NG_GLYPH_H

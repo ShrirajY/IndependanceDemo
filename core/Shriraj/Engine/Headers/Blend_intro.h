@@ -420,19 +420,19 @@ static const float LETTER_THICKNESS = 0.05f;
 
 static const float WAKE_STAGGER = 0.35f;
 static const float WAKE_DURATION = 0.6f;
-static const float WAKE_SETTLE_PAUSE = 0.5f;
+static const float WAKE_SETTLE_PAUSE = 0.2f;
 
 static const float VEHICLE_TRAVEL_MIN = -3.0f;
 static const float VEHICLE_TRAVEL_MAX =  3.0f;
-static const float JET_DURATION = 10.0f;
-static const float TANK_DURATION = 10.0f;
-static const float VEHICLE_PHASE_DURATION = 9.0f;
+static const float JET_DURATION = 8.0f;
+static const float TANK_DURATION = 8.0f;
+static const float VEHICLE_PHASE_DURATION = 7.0f;
 
-static const float FLAG_SWEEP_DURATION = 10.0f;
+static const float FLAG_SWEEP_DURATION = 8.0f;
 static const float MORPH_POP_DURATION = 0.35f;
 
-static const float DONE_HOLD_DURATION = 3.0f;      // "INDIA" sits tricolor before the blackout
-static const float BLACKOUT_DURATION = 2.0f;        // <-- the 2 seconds of black between intro and main program
+static const float DONE_HOLD_DURATION = 1.0f;      // "INDIA" sits tricolor before the blackout
+static const float BLACKOUT_DURATION = 0.0f;        // <-- the 2 seconds of black between intro and main program
 
 } // namespace blend_intro_detail
 

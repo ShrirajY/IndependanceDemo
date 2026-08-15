@@ -91,8 +91,8 @@ inline void drawIndiaMap(float cx = 0.0f, float cy = 0.0f,
     static int outerTotalPts = 0;
     static bool initialized = false;
 
-    const int drawStepState = 12; // state-border vertices added per call
-    const int drawStepOuter = 5;  // outer-border vertices added per call
+    const int drawStepState = 8; // state-border vertices added per call
+    const int drawStepOuter = 2;  // outer-border vertices added per call
 
     if (!initialized) {
         for (int i = 0; i < stateNumLoops; ++i) stateTotalPts += stateCounts[i];

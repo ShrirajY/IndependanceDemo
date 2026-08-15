@@ -7,6 +7,10 @@
 
 void drawCholaTemple(float centerX, float centerY, float scaleX, float scaleY)
 {
+	glPushMatrix();
+	glTranslatef(centerX, centerY, 0.0f);
+	glScalef(scaleX, scaleY, 1.0f);
+
 	//bottom-most part
 	drawQuad_RD(0.8f, 0.08f, 0.10f, -0.98f, 0.2f, 0.1f, 0.0f);
 	
@@ -125,6 +129,7 @@ void drawCholaTemple(float centerX, float centerY, float scaleX, float scaleY)
 
 	drawQuad_RD(0.31f, 0.01f, -0.35f, -0.18f, 0.9f, 0.6f, 0.3f);
 
+	glPopMatrix();
 }
 
 // updating to push

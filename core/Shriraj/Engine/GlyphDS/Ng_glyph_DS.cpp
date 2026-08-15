@@ -367,3 +367,82 @@ void Ng_drawText(const char* text, float startX, float centerY,
         cursorX += glyphWidth + letterSpacing;
     }
 }
+
+// -----------------------------------------------------------------------
+// Tricolor (Indian flag) text helper
+// -----------------------------------------------------------------------
+
+// Indian flag colors: saffron / white / India green.
+static const float Ng_TRICOLOR[3][3] = {
+    { 1.00f, 0.60f, 0.20f },  // saffron
+    { 1.00f, 1.00f, 1.00f },  // white
+    { 0.07f, 0.53f, 0.03f }   // india green
+};
+
+// Total width Ng_drawText would occupy for `text`, using the same
+// glyph-width / letterSpacing cursor math Ng_drawText itself uses.
+// Used to center text around x = 0.
+static float Ng_textWidth(const char* text, float scaleX, float letterSpacing)
+{
+    if (!text) return 0.0f;
+
+    std::size_t len = std::strlen(text);
+    if (len == 0) return 0.0f;
+
+    const float glyphWidth = (4.0f / 6.0f) * scaleX;
+    const float advance = glyphWidth + letterSpacing;
+
+    return glyphWidth + (static_cast<float>(len) - 1.0f) * advance;
+}
+
+// Draws `text` horizontally centered on x = 0, coloring each
+// space-separated word with the next color in the Indian tricolor
+// (saffron -> white -> green, wrapping back to saffron past 3 words).
+//
+// `brightness` scales all three channels uniformly (0 = black, 1 = full
+// color) so this drops straight into fade-in code that used to do
+// glColor3f(fade, fade, fade) before calling Ng_drawText.
+//
+// NOTE: with exactly two words ("INCREDIBLE INDIA"), only saffron and
+// white get used - there's no third word left for green. If you'd
+// rather that line land on saffron + green instead, change the index
+// below from (wordIndex % 3) to (wordIndex == 0 ? 0 : 2).
+void Ng_drawTextTricolor(const char* text, float centerY,
+                          float scaleX, float scaleY,
+                          float letterSpacing, float thickness,
+                          float brightness)
+{
+    if (!text) return;
+
+    const float glyphWidth = (4.0f / 6.0f) * scaleX;
+    const float advance = glyphWidth + letterSpacing;
+
+    float totalWidth = Ng_textWidth(text, scaleX, letterSpacing);
+    float startX = -totalWidth / 2.0f;   // centers on x = 0
+    float cursorX = startX + glyphWidth / 2.0f;
+
+    bool inWord = false;
+    int wordIndex = -1;
+
+    for (const char* p = text; *p != '\0'; ++p)
+    {
+        if (*p == ' ')
+        {
+            inWord = false;
+            cursorX += advance;
+            continue;
+        }
+
+        if (!inWord)
+        {
+            inWord = true;
+            wordIndex++;
+        }
+
+        const float* c = Ng_TRICOLOR[wordIndex % 3];
+        glColor3f(c[0] * brightness, c[1] * brightness, c[2] * brightness);
+
+        Ng_drawLetter(*p, cursorX, centerY, scaleX, scaleY, thickness);
+        cursorX += advance;
+    }
+}

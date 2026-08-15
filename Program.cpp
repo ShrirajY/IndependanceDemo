@@ -31,21 +31,21 @@ int flag = 0;
 // display() function only ever looks at a single "showIndiaMap" bool
 // either way, so swapping between the two modes doesn't touch drawing code.
 bool bUseManualMapControl = false;
-bool bShowIndiaMapManual  = false;   // only read when bUseManualMapControl == true
+bool bShowIndiaMapManual = false; // only read when bUseManualMapControl == true
 
 // ---------------------------------------------------------------------
 // Animation timing constants (seconds)
 // ---------------------------------------------------------------------
-#define PHASE1_ENTER_DURATION   2.0f   // left of screen  -> center, scale fixed at 1.0 2.0
-#define PHASE2_HOLD_DURATION    2.0f   // stays at center, scale fixed at 1.0 2.0
-#define PHASE3_SHRINK_DURATION  3.0f   // center -> final point, scale 1.0 -> 0.2 3.0
+#define PHASE1_ENTER_DURATION 2.0f  // left of screen  -> center, scale fixed at 1.0 2.0
+#define PHASE2_HOLD_DURATION 2.0f   // stays at center, scale fixed at 1.0 2.0
+#define PHASE3_SHRINK_DURATION 3.0f // center -> final point, scale 1.0 -> 0.2 3.0
 #define TOTAL_MONUMENT_DURATION (PHASE1_ENTER_DURATION + PHASE2_HOLD_DURATION + PHASE3_SHRINK_DURATION)
 
-#define ENTER_FROM_X  -3.0f    // off-screen point to the left
-#define ENTER_FROM_Y   0.0f
+#define ENTER_FROM_X -3.0f // off-screen point to the left
+#define ENTER_FROM_Y 0.0f
 
-#define FINAL_SCALE    0.2f
-#define START_SCALE    1.0f
+#define FINAL_SCALE 0.2f
+#define START_SCALE 1.0f
 
 // Nameplate stays black-and-hidden until the monument settles at
 // center; it then fades from black to its own color over this many
@@ -60,55 +60,57 @@ bool bShowIndiaMapManual  = false;   // only read when bUseManualMapControl == t
 // ---------------------------------------------------------------------
 typedef struct
 {
-    DrawMonument    drawFunc;
-    const char*     name;
-    float           finalX;
-    float           finalY;
-    float           startDelay;   // computed as index * TOTAL_MONUMENT_DURATION
-    float           colorR;       // nameplate's fully-faded-in color
-    float           colorG;
-    float           colorB;
+    DrawMonument drawFunc;
+    const char *name;
+    float finalX;
+    float finalY;
+    float startDelay; // computed as index * TOTAL_MONUMENT_DURATION
+    float colorR;     // nameplate's fully-faded-in color
+    float colorG;
+    float colorB;
 } MonumentInfo;
 
 #define MAX_MONUMENTS 7
 MonumentInfo monuments[MAX_MONUMENTS];
 int monumentCount = 0;
 
-void AddMonument(DrawMonument drawFunc, const char* name, float finalX, float finalY,
-                  float colorR, float colorG, float colorB)
+void AddMonument(DrawMonument drawFunc, const char *name, float finalX, float finalY,
+                 float colorR, float colorG, float colorB)
 {
     if (monumentCount >= MAX_MONUMENTS)
         return;
 
-    monuments[monumentCount].drawFunc   = drawFunc;
-    monuments[monumentCount].name       = name;
-    monuments[monumentCount].finalX     = finalX;
-    monuments[monumentCount].finalY     = finalY;
+    monuments[monumentCount].drawFunc = drawFunc;
+    monuments[monumentCount].name = name;
+    monuments[monumentCount].finalX = finalX;
+    monuments[monumentCount].finalY = finalY;
     monuments[monumentCount].startDelay = 27.0 + (float)monumentCount * TOTAL_MONUMENT_DURATION;
-    monuments[monumentCount].colorR     = colorR;
-    monuments[monumentCount].colorG     = colorG;
-    monuments[monumentCount].colorB     = colorB;
+    monuments[monumentCount].colorR = colorR;
+    monuments[monumentCount].colorG = colorG;
+    monuments[monumentCount].colorB = colorB;
     monumentCount++;
 }
 
 float ClampF(float value, float minValue, float maxValue)
 {
-    if (value < minValue) return(minValue);
-    if (value > maxValue) return(maxValue);
-    return(value);
+    if (value < minValue)
+        return (minValue);
+    if (value > maxValue)
+        return (maxValue);
+    return (value);
 }
 
 // Works out where a monument should be drawn (x, y, scale) for the
 // current global time, and whether it should be drawn at all yet.
 // Returns 1 if the monument has started its sequence (visible), else 0.
-int GetMonumentTransform(MonumentInfo* info, float globalTime, float* outX, float* outY, float* outScale)
+int GetMonumentTransform(MonumentInfo *info, float globalTime, float *outX, float *outY, float *outScale)
 {
     float localTime = globalTime - info->startDelay;
 
     if (localTime < 0.0f)
     {
         // this monument's turn hasn't come yet
-        return(0);
+        return (0);
     }
 
     if (localTime < PHASE1_ENTER_DURATION)
@@ -147,7 +149,7 @@ int GetMonumentTransform(MonumentInfo* info, float globalTime, float* outX, floa
         *outScale = FINAL_SCALE;
     }
 
-    return(1);
+    return (1);
 }
 
 // Nameplate stays hidden while the monument is still sliding in.
@@ -156,14 +158,14 @@ int GetMonumentTransform(MonumentInfo* info, float globalTime, float* outX, floa
 // NAMEPLATE_FADE_DURATION seconds, then stays that color from then on
 // (through the hold, the shrink, and the final parked position).
 // Returns 1 if the nameplate should be drawn at all, else 0.
-int GetNameplateColor(MonumentInfo* info, float globalTime, float* outR, float* outG, float* outB)
+int GetNameplateColor(MonumentInfo *info, float globalTime, float *outR, float *outG, float *outB)
 {
     float localTime = globalTime - info->startDelay;
 
     if (localTime < PHASE1_ENTER_DURATION)
     {
         // still entering : no nameplate yet
-        return(0);
+        return (0);
     }
 
     float holdLocalTime = localTime - PHASE1_ENTER_DURATION;
@@ -173,7 +175,7 @@ int GetNameplateColor(MonumentInfo* info, float globalTime, float* outR, float* 
     *outG = LERP(0.0f, info->colorG, t);
     *outB = LERP(0.0f, info->colorB, t);
 
-    return(1);
+    return (1);
 }
 
 // drawBuilding's existing call site in the project passes (scale, x, y)
@@ -197,10 +199,10 @@ void drawAgraFortAdapter(float x, float y, float scaleX, float scaleY)
 // check, exposed as its own function so display() reads as a single line.
 int AreAllMonumentsSettled(float globalTime)
 {
-    return(globalTime >= 27.0 + 35.0);
+    return (globalTime >= 27.0 + 35.0);
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     void initialize(void);
     void uninitialize(void);
@@ -223,7 +225,7 @@ int main(int argc, char* argv[])
     glutCloseFunc(uninitialize);
     glutTimerFunc(16, timer, 0);
     glutMainLoop();
-    return(0);
+    return (0);
 }
 
 void initialize(void)
@@ -242,17 +244,18 @@ void initialize(void)
     // map once you know that mapping, so each one parks roughly where
     // it actually sits geographically.
     AddMonument(drawAgraFortAdapter, "Agra Fort", 1.0, 1.0, 1.0, 1.0, 0.0);
-    AddMonument(drawKonark,         "Konark Sun Temple", 0.2f, -0.16f, 1.00f, 0.60f, 0.00f); // saffron
-    AddMonument(draw_redfort,       "Red Fort",          -0.4f,  0.7f, 0.85f, 0.10f, 0.10f); // red
-    AddMonument(DrawSarnathTemple,  "Sarnath Temple",      -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
+    AddMonument(drawKonark, "Konark Sun Temple", 0.2f, -0.16f, 1.00f, 0.60f, 0.00f);      // saffron
+    AddMonument(draw_redfort, "Red Fort", -0.4f, 0.7f, 0.85f, 0.10f, 0.10f);              // red
+    AddMonument(DrawSarnathTemple, "Sarnath Temple", -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
     // AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
-    AddMonument(DrawCSMTAdapter,    "CSMT",                -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
+    AddMonument(DrawCSMTAdapter, "CSMT", -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
     AddMonument(drawCholaTemple, "Chola Temple", -1.0, 1.0, 0.5, 0.0, 0.5);
 }
 
 void resize(int width, int height)
 {
-    if (height <= 0) height = 1;
+    if (height <= 0)
+        height = 1;
     float aspect = (float)width / (float)height;
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -265,6 +268,9 @@ void resize(int width, int height)
 
 int introFlag = 0;
 
+float color1 = 0.0f;
+float color2 = 0.0f;
+
 void display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -272,25 +278,33 @@ void display(void)
     glLoadIdentity();
 
     int showIndiaMap = bUseManualMapControl
-                            ? bShowIndiaMapManual
-                            : AreAllMonumentsSettled(elapsedTimeSeconds);
+                           ? bShowIndiaMapManual
+                           : AreAllMonumentsSettled(elapsedTimeSeconds);
     if (showIndiaMap)
     {
         drawIndiaMap();
     }
 
-
-    if (elapsedTimeSeconds < 28.0f)
+    if (elapsedTimeSeconds < 27.0f)
     {
-        if(introFlag == 0)
+        if (introFlag == 0)
         {
             introFlag = DrawIndiaBlendIntro();
-            // glColor3f(0.0 + elapsedTimeSeconds * 0.2, 0.0 + elapsedTimeSeconds * 0.2, 0.0 + elapsedTimeSeconds * 0.2);
-            // Ng_drawText("INCREDIBLE INDIA", -0.9, 0.0, 0.1, 0.1, 0.03, 0.02);
         }
         else
         {
-
+            if (color1 <= 1.0)
+            {
+                color1 += 0.005f;
+            }
+            else
+            {
+                color2 += 0.005f;
+            }
+            
+            Ng_drawTextTricolor("India has FOURTY FIVE", 0.6f, 0.1f, 0.1f, 0.03f, 0.02f, color1);
+            Ng_drawTextTricolor("UNESCO World Heritage Sites", 0.3f, 0.1f, 0.1f, 0.03f, 0.02f, color1);
+            Ng_drawTextTricolor("INCREDIBLE INDIA", 0.0f, 0.1f, 0.1f, 0.03f, 0.02f, color2);
         }
     }
 
