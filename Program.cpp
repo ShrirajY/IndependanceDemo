@@ -263,7 +263,7 @@ void initialize(void)
     AddMonument(drawKonark, "Konark Sun Temple", 0.2f, -0.16f, 1.00f, 0.60f, 0.00f);      // saffron
     AddMonument(draw_redfort, "Red Fort", -0.4f, 0.7f, 0.85f, 0.10f, 0.10f);              // red
     AddMonument(DrawSarnathTemple, "Sarnath Temple", -0.017f, 0.2f, 1.00f, 0.84f, 0.00f); // gold
-    // AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
+    AddMonument(drawHampi,          "Hampi",               0.7f,  0.7f, 0.80f, 0.60f, 0.20f); // sandstone
     AddMonument(DrawCSMTAdapter, "CSMT", -0.6f, -0.12f, 0.60f, 0.30f, 0.10f); // heritage brown
     AddMonument(drawCholaTemple, "Chola Temple", -1.0, 1.0, 0.5, 0.0, 0.5);
     
@@ -299,7 +299,6 @@ void display(void)
     glLoadIdentity();
 
     // TEMPORARILY DISABLED FOR TESTING OUTRO ONLY
-    /*
     int showIndiaMap = bUseManualMapControl
                            ? bShowIndiaMapManual
                            : AreAllMonumentsSettled(elapsedTimeSeconds);
@@ -347,7 +346,7 @@ void display(void)
             }
         }
     }
-    */
+
 
     // Draw outro animation with musical note synchronized text
     DrawOutroAnimation(elapsedTimeSeconds);
