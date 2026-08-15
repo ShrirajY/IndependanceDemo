@@ -1,5 +1,7 @@
+@echo off
+if not exist build mkdir build
 del build\*.obj
-del *obj
+del *.obj
 del *.exe
 
 cl.exe /c /EHsc /I ./external/freeglut/include Program.cpp ./Monuments/Shriraj/Programs/RedFort.cpp ./Monuments/Lakshmi/Programs/Konark.cpp ./core/Shriraj/Engine/Programs/Ng_shapes.cpp ./core/Lakshmi/Engine/Programs/LP_shapes.cpp ^
@@ -9,6 +11,7 @@ cl.exe /c /EHsc /I ./external/freeglut/include Program.cpp ./Monuments/Shriraj/P
     ./nameplate/Nameplate.cpp ./core/Shriraj/Engine/GlyphDS/Ng_glyph_DS.cpp ^
     ./core/Prashant/Program/E_PG_2DShapes.cpp ./Monuments/Prashant/Program/AgraFort.cpp ^
     ./core/Rugved/RSD_BINE/Programs/objects.cpp ./core/Rugved/RSD_BINE/Programs/shapes.cpp ./Monuments/Rugved/Programs/cholaTemple.cpp^
+    ./outro/Programs/OutroAnimation.cp
     /Fobuild\
 
 link.exe build\Program.obj ^
