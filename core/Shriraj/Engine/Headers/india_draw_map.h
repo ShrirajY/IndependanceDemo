@@ -1,41 +1,3 @@
-/*
- * india_map_draw.h
- *
- * Drop-in, single-function version of the India outline map.
- * Call drawIndiaMap(cx, cy, scale) once per frame from YOUR display()
- * function. It keeps its own progress state internally (as statics), so
- * every call just draws a little more of the map than the last one —
- * you don't need to manage any globals or write a dedicated timer for it.
- * Your program's existing timer (the one that calls glutPostRedisplay())
- * is all the "timer" this needs.
- *
- * Usage:
- *     #include "india_map_draw.h"
- *
- *     void display(void) {
- *         glClearColor(0,0,0,1);
- *         glClear(GL_COLOR_BUFFER_BIT);
- *         drawIndiaMap(0.0f, 0.0f, 1.0f);   // centered, natural size
- *         glutSwapBuffers();
- *     }
- *
- * To restart the draw-in animation from scratch (e.g. on a key press):
- *     drawIndiaMap(0.0f, 0.0f, 1.0f, true);   // reset = true
- *
- * cx, cy   : where to center the map in your current GL coordinate space
- * scale    : 1.0 = the map normalized to fit within roughly [-1, 1]
- *            vertically (its native ~190 x 200 unit data box is rescaled
- *            internally) — matches a resize()/reshape() that sets up an
- *            ortho projection like glOrtho(-aspect,aspect,-1,1,-1,1).
- *            Shrink/grow from there to fit your scene.
- * reset    : pass true once to restart the progressive animation
- *
- * Requires india_data.h (statePts/stateCounts/stateNumLoops,
- * outerPts/outerCounts/outerNumLoops) to be available, same as before.
- * Compile as C++ (uses std::min), e.g.:
- *     g++ your_program.c -o your_program -lGL -lGLU -lglut
- */
-
 #ifndef INDIA_MAP_DRAW_H
 #define INDIA_MAP_DRAW_H
 
@@ -74,11 +36,8 @@ inline void drawRingsPartial(const float pts[][2], const int counts[],
     }
 }
 
-} // namespace india_map_detail
+}
 
-// The data's native bounding box is roughly 190 x 200 units
-// (half-width ~95, half-height ~100). This normalizes it so half-height
-// = 1.0, matching an ortho projection like glOrtho(-aspect,aspect,-1,1,-1,1).
 #define INDIA_MAP_DATA_HALF_H 100.0f
 #define INDIA_MAP_NORM (1.0f / INDIA_MAP_DATA_HALF_H)
 
@@ -92,16 +51,6 @@ inline void drawIndiaMap(float cx = 0.0f, float cy = 0.0f,
 
     static int stateCallCounter = 0;
     static bool initialized = false;
-
-    // ============================================================
-    // CONFIGURATION
-    // ============================================================
-    // 3 = one outer-border update for every 3 state-border updates
-    //
-    // Change this to:
-    //     5 -> one outer update every 5 state updates
-    //     10 -> one outer update every 10 state updates
-    // etc.
     const int stateCallsPerOuterCall = 6;
 
     // Number of vertices added during one state update
@@ -110,9 +59,6 @@ inline void drawIndiaMap(float cx = 0.0f, float cy = 0.0f,
     // Number of vertices added during one outer update
     const int drawStepOuter = 2;
 
-    // ============================================================
-    // INITIALIZATION
-    // ============================================================
     if (!initialized) {
         for (int i = 0; i < stateNumLoops; ++i)
             stateTotalPts += stateCounts[i];

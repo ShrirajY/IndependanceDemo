@@ -1,25 +1,14 @@
 #include "Ng_glyph_DS.h"
 #include <GL/freeglut.h>
 #include <vector>
-#include <utility> // std::pair
+#include <utility>
 #include <cctype>
-#include <cstddef> // std::size_t
-#include <cmath>   // std::sqrt, std::atan2, std::fabs
+#include <cstddef> 
+#include <cmath> 
 
-// Declared in Ng_shapes.h. Forward-declared here instead of #include-ing
-// that header, since its exact relative path depends on where you keep
-// Ng_glyph.cpp in your project tree. If Ng_shapes.h is already reachable
-// from here, feel free to replace these two lines with an #include.
 void Ng_drawRectangle(float x, float y, float width, float height);
 void Ng_drawRotatedRectangle(float x, float y, float width, float height, float angle);
 
-// -----------------------------------------------------------------------
-// Internal helpers
-// -----------------------------------------------------------------------
-
-// Design grid is 4 units wide (x: 0..4) by 6 units tall (y: 0..6), with
-// (2,3) as the grid center. This maps that grid onto a 1.0-unit-tall box
-// centered on (centerX, centerY), scaled by scaleX / scaleY.
 static inline void Ng_letterGridToWorld(float gridX, float gridY,
                                          float centerX, float centerY,
                                          float scaleX, float scaleY,
@@ -33,13 +22,6 @@ static inline void Ng_letterGridToWorld(float gridX, float gridY,
 typedef std::vector<std::pair<float, float> > Ng_Stroke;   // one polyline
 typedef std::vector<Ng_Stroke> Ng_Glyph;                   // set of polylines
 
-// Draws one "double stranded" (filled, two-edged) segment from
-// (x1,y1) to (x2,y2) as a solid bar of the given thickness, using
-// Ng_drawRectangle directly for horizontal/vertical segments and
-// Ng_drawRotatedRectangle (Ng_drawRectangle's rotated sibling, built the
-// same way) for diagonal ones. Small square caps at both endpoints
-// (also via Ng_drawRectangle) fill the corner gaps where two segments
-// meet at an angle.
 static void Ng_drawThickSegment(float x1, float y1, float x2, float y2, float thickness)
 {
     float dx = x2 - x1;
@@ -75,7 +57,6 @@ static void Ng_drawThickSegment(float x1, float y1, float x2, float y2, float th
     Ng_drawRectangle(x2, y2, thickness, thickness);
 }
 
-// Draws every stroke of a glyph as a chain of filled, thick segments.
 static void Ng_drawGlyph(const Ng_Glyph& glyph,
                           float centerX, float centerY,
                           float scaleX, float scaleY,
@@ -368,20 +349,12 @@ void Ng_drawText(const char* text, float startX, float centerY,
     }
 }
 
-// -----------------------------------------------------------------------
-// Tricolor (Indian flag) text helper
-// -----------------------------------------------------------------------
-
-// Indian flag colors: saffron / white / India green.
 static const float Ng_TRICOLOR[3][3] = {
     { 1.00f, 0.60f, 0.20f },  // saffron
     { 1.00f, 1.00f, 1.00f },  // white
     { 0.07f, 0.53f, 0.03f }   // india green
 };
 
-// Total width Ng_drawText would occupy for `text`, using the same
-// glyph-width / letterSpacing cursor math Ng_drawText itself uses.
-// Used to center text around x = 0.
 static float Ng_textWidth(const char* text, float scaleX, float letterSpacing)
 {
     if (!text) return 0.0f;
@@ -395,18 +368,6 @@ static float Ng_textWidth(const char* text, float scaleX, float letterSpacing)
     return glyphWidth + (static_cast<float>(len) - 1.0f) * advance;
 }
 
-// Draws `text` horizontally centered on x = 0, coloring each
-// space-separated word with the next color in the Indian tricolor
-// (saffron -> white -> green, wrapping back to saffron past 3 words).
-//
-// `brightness` scales all three channels uniformly (0 = black, 1 = full
-// color) so this drops straight into fade-in code that used to do
-// glColor3f(fade, fade, fade) before calling Ng_drawText.
-//
-// NOTE: with exactly two words ("INCREDIBLE INDIA"), only saffron and
-// white get used - there's no third word left for green. If you'd
-// rather that line land on saffron + green instead, change the index
-// below from (wordIndex % 3) to (wordIndex == 0 ? 0 : 2).
 void Ng_drawTextTricolor(const char* text, float centerY,
                           float scaleX, float scaleY,
                           float letterSpacing, float thickness,

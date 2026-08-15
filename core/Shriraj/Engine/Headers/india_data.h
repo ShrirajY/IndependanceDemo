@@ -1,23 +1,6 @@
 #ifndef INDIA_DATA_H
 #define INDIA_DATA_H
 
-// Auto-generated India outline + state boundary data.
-//
-// Source: state-level administrative boundaries (GADM-derived) for the 35
-// undisputed states/UTs, unioned for state borders and for the outer national
-// border of the mainland + Andaman & Nicobar islands.
-//
-// Jammu & Kashmir / Ladakh (including Pakistan-administered Kashmir and the
-// Aksai Chin area administered by China) is drawn per India's official claimed
-// boundary, as used on maps published in/for India (Survey of India convention),
-// rather than the de-facto Line of Control / Line of Actual Control used by most
-// international datasets. This is a disputed boundary; other reputable sources
-// (e.g. UN, most non-Indian atlases) draw this region differently.
-//
-// Coordinates are (longitude - 82.797, latitude - 21.915) * 6.5959, so the
-// shape is centered near the origin with bbox W=192.8 H=200.0 units
-// (matches the ~190x200 unit convention / INDIA_MAP_DATA_HALF_H=100 used by
-// india_map_draw.h).
 
 static const int outerNumLoops = 1;
 static const int outerCounts[] = {210};
